@@ -120,7 +120,7 @@ public class Trader {
 //			return null;
 //		}
 //		return user.getAccount();
-	return Response.status(200).entity(userId.toString()).build();
+		return Response.status(200).entity(userId).build();
 	}
 
 	private static User findUserById(Long userId) {
