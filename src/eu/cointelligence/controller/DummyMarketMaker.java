@@ -6,8 +6,8 @@ import java.util.Map;
 import eu.cointelligence.model.Statement;
 import eu.cointelligence.model.Transaction;
 
-public class MarketMaker {
-	private static MarketMaker instance;
+public class DummyMarketMaker implements IMarketMaker {
+	private static IMarketMaker instance;
 	private static MarketMakerThread marketMakerThread;
 	private static Map<Statement, Long> statementsAndPrices;
 	private static List<Transaction> logs;
@@ -26,28 +26,36 @@ public class MarketMaker {
 		}
 	}
 
-	private MarketMaker() {
-		if (MarketMaker.marketMakerThread == null) {
-			MarketMaker.marketMakerThread = new MarketMakerThread();
-			MarketMaker.marketMakerThread.start();
+	private DummyMarketMaker() {
+		if (DummyMarketMaker.marketMakerThread == null) {
+			DummyMarketMaker.marketMakerThread = new MarketMakerThread();
+			DummyMarketMaker.marketMakerThread.start();
 		}
 	}
 
 	// singleton
 	// TODO javadoc
-	public static MarketMaker getInstance() {
+	public static IMarketMaker getInstance() {
 		if (instance == null) {
-			instance = new MarketMaker();
+			instance = new DummyMarketMaker();
 		}
 
 		return instance;
 	}
 
 	// TODO javadoc
+	/* (non-Javadoc)
+	 * @see eu.cointelligence.controller.IMarketMaker#getStatementsAndPrices()
+	 */
+	@Override
 	public Map<Statement, Long> getStatementsAndPrices() {
-		return MarketMaker.statementsAndPrices;
+		return DummyMarketMaker.statementsAndPrices;
 	}
 
+	/* (non-Javadoc)
+	 * @see eu.cointelligence.controller.IMarketMaker#getPriceForStatement(java.lang.Long)
+	 */
+	@Override
 	public Long getPriceForStatement(Long statementId) {
 		Statement statement = findStatementById(statementId);
 		if (statement == null) {
@@ -70,6 +78,10 @@ public class MarketMaker {
 		return null;
 	}
 
+	/* (non-Javadoc)
+	 * @see eu.cointelligence.controller.IMarketMaker#addLog(eu.cointelligence.model.Transaction)
+	 */
+	@Override
 	public boolean addLog(Transaction log) {
 		if (log != null) {
 			return logs.add(log);
@@ -77,11 +89,15 @@ public class MarketMaker {
 		return false;
 	}
 
+	/* (non-Javadoc)
+	 * @see eu.cointelligence.controller.IMarketMaker#addStatement(eu.cointelligence.model.Statement)
+	 */
+	@Override
 	public boolean addStatement(Statement statement) {
 		if (statement == null) {
 			return false;
 		}
-		MarketMaker.statementsAndPrices.put(statement, Constants.DEFAULT_PRICE);
+		DummyMarketMaker.statementsAndPrices.put(statement, Constants.DEFAULT_PRICE);
 		return true;
 	}
 

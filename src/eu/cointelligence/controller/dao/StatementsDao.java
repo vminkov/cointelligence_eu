@@ -7,7 +7,7 @@ import javax.persistence.PersistenceContext;
 import eu.cointelligence.model.Statement;
 
 @Stateless
-public class StatementsDao {
+public class StatementsDao extends GenericDaoImpl<Statement> {
 	
 	@PersistenceContext(unitName = "COINTELLIGENCE")
 	private EntityManager em;

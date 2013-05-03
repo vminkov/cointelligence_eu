@@ -1,4 +1,4 @@
-package eu.cointelligence.controller;
+package rest;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;

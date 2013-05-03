@@ -7,15 +7,16 @@ import javax.ws.rs.Path;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
 
+import eu.cointelligence.controller.entity.TradingAction;
 import eu.cointelligence.model.Account;
 import eu.cointelligence.model.Statement;
 import eu.cointelligence.model.Transaction;
 import eu.cointelligence.model.User;
 
 @Path("/trade")
-public class Trader {
+public class Trader implements ITraderService {
 
-	private static Trader instance;
+	private static ITraderService instance;
 	private static TraderThread traderThread;
 	private static List<User> users;
 
@@ -34,7 +35,7 @@ public class Trader {
 		}
 	}
 
-	public Trader getInstance() {
+	public ITraderService getInstance() {
 		if (instance == null) {
 			instance = new Trader();
 		}
@@ -43,12 +44,16 @@ public class Trader {
 	}
 
 	// TODO: javadoc
+	/* (non-Javadoc)
+	 * @see eu.cointelligence.controller.ITraderService#buy(java.lang.Long, java.lang.Long, java.lang.Long)
+	 */
+	@Override
 	public boolean buy(Long userId, Long statementId, Long wantedQuantity) {
 		User user = findUserById(userId);
 		if (user == null || wantedQuantity == null) {
 			return false;
 		}
-		Long statementPrice = MarketMaker.getInstance().getPriceForStatement(
+		Long statementPrice = DummyMarketMaker.getInstance().getPriceForStatement(
 				statementId);
 		Long availableCash = user.getAccount().getCointels();
 		if ((statementPrice == null || availableCash == null)
@@ -56,7 +61,7 @@ public class Trader {
 			return false;
 		}
 		Account account = user.getAccount();
-		Statement statement = MarketMaker.findStatementById(statementId);
+		Statement statement = DummyMarketMaker.findStatementById(statementId);
 
 		// do the action
 		Long currentOwnedQuantity = user.getAccount()
@@ -70,22 +75,26 @@ public class Trader {
 		account.getStatementsInPossession().put(statement, newOwnedQuantity);
 		account.setCointels(availableCash - (statementPrice * wantedQuantity));
 
-		MarketMaker.getInstance().addLog(
+		DummyMarketMaker.getInstance().addLog(
 				new Transaction(user.getAccount(), statement, TradingAction.BUY
 						.toString(), wantedQuantity));
 		return true;
 	}
 
 	// TODO: javadoc
+	/* (non-Javadoc)
+	 * @see eu.cointelligence.controller.ITraderService#sell(java.lang.Long, java.lang.Long, java.lang.Long)
+	 */
+	@Override
 	public boolean sell(Long userId, Long statementId, Long quantity) {
 		User user = findUserById(userId);
 		if (user == null || quantity == null) {
 			return false;
 		}
-		Long statementPrice = MarketMaker.getInstance().getPriceForStatement(
+		Long statementPrice = DummyMarketMaker.getInstance().getPriceForStatement(
 				statementId);
 		Account account = user.getAccount();
-		Statement statement = MarketMaker.findStatementById(statementId);
+		Statement statement = DummyMarketMaker.findStatementById(statementId);
 		Long ownedQuantity = account.getStatementsInPossession().get(statement);
 
 		if ((statementPrice == null || ownedQuantity == null)
@@ -105,22 +114,26 @@ public class Trader {
 		}
 		account.setCointels(account.getCointels() + (statementPrice * quantity));
 
-		MarketMaker.getInstance().addLog(
+		DummyMarketMaker.getInstance().addLog(
 				new Transaction(user.getAccount(), statement,
 						TradingAction.SELL.toString(), quantity));
 		return true;
 	}
 
+	/* (non-Javadoc)
+	 * @see eu.cointelligence.controller.ITraderService#checkBankAccount(java.lang.Long)
+	 */
+	@Override
 	@GET
 	@QueryParam("/{userId}")
 //	@Produces("application/json")
-	public Response checkBankAccount(@QueryParam("userId") final Long userId) {
+	public String checkBankAccount(@QueryParam("userId") final Long userId) {
 //		User user = findUserById(userId);
 //		if (user == null) {
 //			return null;
 //		}
 //		return user.getAccount();
-		return Response.status(200).entity(userId).build();
+		return "lalalallalalala";
 	}
 
 	private static User findUserById(Long userId) {
