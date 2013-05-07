@@ -16,32 +16,37 @@ public class PricingAlgorithmFactory {
 		return new IPricingAlgorithm() {
 
 			@Override
-			public Map<Statement, Long> recalculate(
-					Map<Statement, Long> oldPrices, List<Transaction> logs) {
+			public Map<Long, Long> recalculate(
+					Map<Long, Long> oldPrices, List<Transaction> logs) {
 
 				Iterator<Transaction> iterator = logs.iterator();
-				int last10Counter = logs.size() - 10;
-
-				while (last10Counter > 0) {
-					iterator.next();
-					last10Counter--;
-				}
+//				int last10Counter = logs.size() - 10;
+//
+//				while (last10Counter > 0) {
+//					iterator.next();
+//					last10Counter--;
+//				}
 
 				while (iterator.hasNext()) {
 					Transaction log = iterator.next();
+					if(log.getCheckedByMarketMaker() != null && log.getCheckedByMarketMaker())
+						continue;
+					
+					log.setCheckedByMarketMaker(new Boolean(true));
 
 					Statement statement = log.getStatement();
-					Long price = oldPrices.get(statement);
+					Long price = oldPrices.get(statement.getId());
 
-					if (log.getOrderType().equals(TradingAction.BUY.toString())
+					if (TradingAction.BUY.toString().equals(log.getOrderType())
 							&& price < 100) {
 						price += 1;
-						oldPrices.put(statement, price);
-					} else if (log.getOrderType().equals(TradingAction.SELL.toString())
+					} else if (TradingAction.SELL.toString().equals(log.getOrderType())
 							&& price > 0) {
 						price -= 1;
-						oldPrices.put(statement, price);
 					}
+					oldPrices.put(statement.getId(), price);
+					
+					
 				}
 				return oldPrices;
 			}

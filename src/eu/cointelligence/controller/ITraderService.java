@@ -1,20 +1,17 @@
 package eu.cointelligence.controller;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.QueryParam;
+import eu.cointelligence.model.Account;
 
 public interface ITraderService {
 
-	// TODO: javadoc
-	public abstract boolean buy(Long userId, Long statementId,
+	public boolean buy(Long userId,
+			Long statementId,
 			Long wantedQuantity);
 
-	// TODO: javadoc
-	public abstract boolean sell(Long userId, Long statementId, Long quantity);
+	public boolean sell(Long userId,
+			Long statementId,
+			Long quantity);
 
-	@GET
-	@QueryParam("/{userId}")
-	//	@Produces("application/json")
-	public abstract String checkBankAccount(@QueryParam("userId") Long userId);
+	public abstract Account checkBankAccount(Long userId);
 
 }

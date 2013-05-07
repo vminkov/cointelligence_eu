@@ -1,5 +1,7 @@
 package eu.cointelligence.model;
 
+import java.util.UUID;
+
 import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -26,14 +28,21 @@ public class Transaction {
 	private Statement statement;
 	@Id
 	private Long id;
-	
-	public Transaction(){}
-	
-	public Transaction(Account account, Statement statement, String orderType, Long amount) {
+	@Basic
+	private Boolean checkedByMarketMaker;
+
+	public Transaction() {
+	}
+
+	public Transaction(Account account, Statement statement, String orderType,
+			Long amount) {
 		setAccount(account);
 		setStatement(statement);
 		setOrderType(orderType);
 		setAmount(amount);
+
+		// XXX: awful and ugly... and I am not sure if it's unique actually
+		setId(UUID.randomUUID().getLeastSignificantBits());
 	}
 
 	public Account getAccount() {
@@ -92,4 +101,11 @@ public class Transaction {
 		return id;
 	}
 
+	public void setCheckedByMarketMaker(Boolean param) {
+		this.checkedByMarketMaker = param;
+	}
+
+	public Boolean getCheckedByMarketMaker() {
+		return checkedByMarketMaker;
+	}
 }

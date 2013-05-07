@@ -9,7 +9,7 @@ import eu.cointelligence.model.Transaction;
 public class DummyMarketMaker implements IMarketMaker {
 	private static IMarketMaker instance;
 	private static MarketMakerThread marketMakerThread;
-	private static Map<Statement, Long> statementsAndPrices;
+	private static Map<Long, Long> statementsAndPrices;
 	private static List<Transaction> logs;
 
 	private class MarketMakerThread extends Thread {
@@ -28,8 +28,10 @@ public class DummyMarketMaker implements IMarketMaker {
 
 	private DummyMarketMaker() {
 		if (DummyMarketMaker.marketMakerThread == null) {
-			DummyMarketMaker.marketMakerThread = new MarketMakerThread();
-			DummyMarketMaker.marketMakerThread.start();
+			
+			System.out.println("THIS SHOULD NOT BE INSTATIATED!!!");
+//			DummyMarketMaker.marketMakerThread = new MarketMakerThread();
+//			DummyMarketMaker.marketMakerThread.start();
 		}
 	}
 
@@ -48,7 +50,7 @@ public class DummyMarketMaker implements IMarketMaker {
 	 * @see eu.cointelligence.controller.IMarketMaker#getStatementsAndPrices()
 	 */
 	@Override
-	public Map<Statement, Long> getStatementsAndPrices() {
+	public Map<Long, Long> getStatementsAndPrices() {
 		return DummyMarketMaker.statementsAndPrices;
 	}
 
@@ -57,24 +59,7 @@ public class DummyMarketMaker implements IMarketMaker {
 	 */
 	@Override
 	public Long getPriceForStatement(Long statementId) {
-		Statement statement = findStatementById(statementId);
-		if (statement == null) {
-			return null;
-		}
-
-		return statement.getCurrentValue();
-	}
-
-	public static Statement findStatementById(Long statementId) {
-		if (statementId == null || "".equals(statementId)) {
-			return null;
-		}
-
-		for (Statement statement : statementsAndPrices.keySet()) {
-			if (statement.getId().equals(statementId)) {
-				return statement;
-			}
-		}
+		
 		return null;
 	}
 
@@ -97,11 +82,11 @@ public class DummyMarketMaker implements IMarketMaker {
 		if (statement == null) {
 			return false;
 		}
-		DummyMarketMaker.statementsAndPrices.put(statement, Constants.DEFAULT_PRICE);
+		DummyMarketMaker.statementsAndPrices.put(statement.getId(), Constants.DEFAULT_PRICE);
 		return true;
 	}
 
-	private static void recomputePrices() {
+	 public void recomputePrices() {
 		synchronized (logs) {
 			PricingAlgorithmFactory.getPricingAlgorithm().recalculate(
 					statementsAndPrices, logs);

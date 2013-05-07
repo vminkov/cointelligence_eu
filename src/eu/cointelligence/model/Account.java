@@ -5,6 +5,7 @@ import java.util.Map;
 import javax.persistence.Basic;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -12,20 +13,12 @@ import javax.persistence.Table;
 @Table(name = "T_ACCOUNT")
 public class Account {
 
-	@ElementCollection
-	private Map<Statement, Long> statementsInPossession;
 	@Basic
 	private Long cointels;
 	@Id
 	private Long id;
-
-	public void setStatementsInPossession(Map<Statement, Long> param) {
-		this.statementsInPossession = param;
-	}
-
-	public Map<Statement, Long> getStatementsInPossession() {
-		return statementsInPossession;
-	}
+	@ElementCollection(fetch = FetchType.EAGER)
+	private Map<Long, Long> statementsInPossession;
 
 	public void setCointels(Long param) {
 		this.cointels = param;
@@ -41,6 +34,14 @@ public class Account {
 
 	public Long getId() {
 		return id;
+	}
+
+	public void setStatementsInPossession(Map<Long, Long> param) {
+		this.statementsInPossession = param;
+	}
+
+	public Map<Long, Long> getStatementsInPossession() {
+		return statementsInPossession;
 	}
 
 }
