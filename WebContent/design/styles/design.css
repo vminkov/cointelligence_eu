@@ -1,0 +1,202 @@
+﻿
+html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, abbr, address, cite, code, del, dfn, em, img, ins, kbd, q, samp, small, strong, sub, sup, var, b, i, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary, time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    font-size: 100%;
+    vertical-align: baseline;
+    background: transparent;
+}
+
+body {
+    line-height: 1;
+    font-family: Verdana, Geneva, 'DejaVu Sans', sans-serif;
+    font-size:11px;
+}
+
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+    display: block;
+}
+
+    nav ul {
+        list-style: none;
+    }
+
+
+a {
+    margin: 0;
+    padding: 0;
+    font-size: 100%;
+    vertical-align: baseline;
+    background: transparent;
+    text-decoration: none;
+    color: black;
+}
+/* change colours to suit your needs */
+
+
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+/*reset above*/
+
+/*nav beneath*/
+
+#mainUl{
+    padding-left:20px;
+    padding-top:15px;
+}
+#mainUl li a{
+    font-weight:bold;
+}
+#logo{
+    position:absolute;
+    top:2px;
+    left:550px;
+}
+#signButtons{
+    position:absolute;
+    top:10px;
+    left:1050px;
+}
+/*nav above*/
+
+/*section index  beneath*/
+
+/*baloons ideas*/
+#questionWrapper{
+  margin-left:150px;
+}
+#qestionBaloons{
+    width:100%;
+    height:430px;
+    margin-top:-20px;
+    padding-top:50px;
+   background: #ffffff; /* Old browsers */
+background: -moz-linear-gradient(top,  #ffffff 1%, #d9ebfe 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(1%,#ffffff), color-stop(100%,#d9ebfe)); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top,  #ffffff 1%,#d9ebfe 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top,  #ffffff 1%,#d9ebfe 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top,  #ffffff 1%,#d9ebfe 100%); /* IE10+ */
+background: linear-gradient(to bottom,  #ffffff 1%,#d9ebfe 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#d9ebfe',GradientType=0 ); /* IE6-9 */
+
+}
+
+.headlineQuestion{
+    width:340px;
+}
+#description,#ideaDescription{
+    width:340px;
+    height:100px;
+}
+
+/*tables with questions and ranklist*/
+#tablesPart{
+ width:100%;
+ height: 500px; 
+    padding-top:50px;
+        background-color:#F5F5F5;
+    padding-bottom:50px;
+}
+
+#questionHeadline{
+    margin-left:150px;
+
+}
+#rankingHeadline{
+    /*margin-left:15px;*/
+    /*margin-bottom:60px;*/
+}
+.questionsHeader{
+    font-size:3.9em;
+}
+.questionsSubHeader{
+    font-size:2em;
+    text-align:justify;
+    margin-left:5px;
+}
+.rankHeader{
+    font-size:2.3em;
+}
+.rankSubHeader{
+      font-size:1.5em;
+    text-align:justify;
+    margin-left:5px;
+}
+
+
+/*question table desing*/
+#statementsInfo{
+    border:1px solid #2D3941;
+    margin-top:40px;
+    
+}
+
+.statementDivs{
+    padding:20px 5px;
+    background-color:#3F4D58;
+    color:white;
+    text-align:center;
+    font-weight:bold;
+    font-size:1.2em;
+     border:1px solid #2D3941;
+     margin-left:-20px;
+
+}
+
+
+.questionCol{
+padding:20px 6px;
+text-align:center;
+    background-color:#465662;
+    color:white;
+    border:1px solid #2D3941;
+}
+.idCol{
+    width:20px;
+    
+}
+.titleCol{
+    width:150px;
+ 
+}
+.descCol{
+    width:340px;
+    text-align:left;
+    
+}
+.descCol a{
+    color:white;
+    
+}
+.priceCol{
+    text-align:center;
+
+}
+
+
+#rankTable{
+    margin-top:40px;
+}
+
+/*section about us beneath*/
+
+/*section about us above*/
+
+
+
+
+/*rank section */
+
+/*end rank section*/
+
+/* section index above*/
+
+
+footer p{
+    text-align:center;
+}
