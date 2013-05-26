@@ -5,10 +5,14 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonParseException;
+
 @Entity
 @Table(name = "T_STATEMENT")
 public class Statement {
-
+	private static Gson gson = new Gson();
+	// private static transient Gson gson = new Gson(); ?
 	@Basic
 	private String title;
 	@Basic
@@ -18,7 +22,7 @@ public class Statement {
 	@Basic
 	private Long currentValue;
 	@Id
-	private Long id;
+	private String id;
 
 	public void setTitle(String param) {
 		this.title = param;
@@ -52,12 +56,22 @@ public class Statement {
 		return currentValue;
 	}
 
-	public void setId(Long param) {
+	public static Statement valueOf(String s) {
+		Statement statement = null;
+		try {
+			statement = gson.fromJson(s, Statement.class);
+		} catch (JsonParseException e) {
+			// TODO: adequate exception logging
+			e.printStackTrace();
+		}
+		return statement;
+	}
+
+	public void setId(String param) {
 		this.id = param;
 	}
 
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
-
 }

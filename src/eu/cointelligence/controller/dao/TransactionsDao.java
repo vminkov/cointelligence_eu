@@ -18,6 +18,6 @@ public class TransactionsDao extends GenericDaoImpl<Transaction> {
 	public List<Transaction> getAllTransaction(){
 		Query q = em.createQuery("SELECT t from " + Transaction.class.getName() + " as t");
 	
-		return (List) q.getResultList();
+		return (List<Transaction>) q.getResultList();
 	}
 }

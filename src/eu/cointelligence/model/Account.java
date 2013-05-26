@@ -15,10 +15,10 @@ public class Account {
 
 	@Basic
 	private Long cointels;
-	@Id
-	private Long id;
 	@ElementCollection(fetch = FetchType.EAGER)
-	private Map<Long, Long> statementsInPossession;
+	private Map<String, Long> statementsInPossession;
+	@Id
+	private String id;
 
 	public void setCointels(Long param) {
 		this.cointels = param;
@@ -28,20 +28,20 @@ public class Account {
 		return cointels;
 	}
 
-	public void setId(Long param) {
-		this.id = param;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setStatementsInPossession(Map<Long, Long> param) {
+	public void setStatementsInPossession(Map<String, Long> param) {
 		this.statementsInPossession = param;
 	}
 
-	public Map<Long, Long> getStatementsInPossession() {
+	public Map<String, Long> getStatementsInPossession() {
 		return statementsInPossession;
+	}
+
+	public void setId(String param) {
+		this.id = param;
+	}
+
+	public String getId() {
+		return id;
 	}
 
 }

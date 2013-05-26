@@ -26,10 +26,10 @@ public class Transaction {
 	private String orderType;
 	@OneToOne
 	private Statement statement;
-	@Id
-	private Long id;
 	@Basic
 	private Boolean checkedByMarketMaker;
+	@Id
+	private String id;
 
 	public Transaction() {
 	}
@@ -42,7 +42,8 @@ public class Transaction {
 		setAmount(amount);
 
 		// XXX: awful and ugly... and I am not sure if it's unique actually
-		setId(UUID.randomUUID().getLeastSignificantBits());
+		// UPDATE: now it's a bit better
+		setId(UUID.randomUUID().toString());
 	}
 
 	public Account getAccount() {
@@ -93,19 +94,19 @@ public class Transaction {
 		this.statement = param;
 	}
 
-	public void setId(Long param) {
-		this.id = param;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
 	public void setCheckedByMarketMaker(Boolean param) {
 		this.checkedByMarketMaker = param;
 	}
 
 	public Boolean getCheckedByMarketMaker() {
 		return checkedByMarketMaker;
+	}
+
+	public void setId(String param) {
+		this.id = param;
+	}
+
+	public String getId() {
+		return id;
 	}
 }

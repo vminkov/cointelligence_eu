@@ -17,7 +17,6 @@ import eu.cointelligence.model.Transaction;
 
 @Singleton
 @Startup
-//@DependsOn(value = { "eu.cointelligence.controller.dao.StatementsDao", "eu.cointelligence.controller.dao.TransactionsDao" })
 public class MarketMaker implements IMarketMaker {
 	@EJB
 	private TransactionsDao transactionsDao;
@@ -25,12 +24,12 @@ public class MarketMaker implements IMarketMaker {
 	private StatementsDao statementsDao;
 	
 	
-	private Map<Long, Long> statementsAndPrices;
+	private Map<String, Long> statementsAndPrices;
 
     @PostConstruct
     public void init() {
         System.out.println("MarketMaker.initCache");
-        this.statementsAndPrices = new HashMap<Long, Long>();
+        this.statementsAndPrices = new HashMap<String, Long>();
 		List<Statement> statements = statementsDao.getStatements();
 		
 		for (Statement statement : statements) {
@@ -44,12 +43,12 @@ public class MarketMaker implements IMarketMaker {
 
 	
 	@Override
-	public Map<Long, Long> getStatementsAndPrices() {
+	public Map<String, Long> getStatementsAndPrices() {
 		return this.statementsAndPrices;
 	}
 
 	@Override
-	public Long getPriceForStatement(Long statementId) {
+	public Long getPriceForStatement(String statementId) {
 		return this.statementsDao.find(statementId).getCurrentValue();
 	}
 
@@ -65,14 +64,14 @@ public class MarketMaker implements IMarketMaker {
 
 	//TODO
 	@Override
-	@Schedule(hour = "*", minute = "*", second = "0")
+	@Schedule(hour = "*", minute = "*/5")
 	public void recomputePrices() {
 		System.out.println("RECALCULATING!");
 		List<Transaction> logs = transactionsDao.getAllTransaction();
 		statementsAndPrices = PricingAlgorithmFactory.getPricingAlgorithm().recalculate(statementsAndPrices, logs);
 		
 		//TODO: batch commit(see comment below)
-		for (Long stId : this.statementsAndPrices.keySet()) {
+		for (String stId : this.statementsAndPrices.keySet()) {
 			Statement st = this.statementsDao.find(stId);
 			st.setCurrentValue(this.statementsAndPrices.get(stId));
 			statementsDao.update(st);

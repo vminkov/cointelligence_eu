@@ -35,8 +35,8 @@ public class TraderService implements ITraderService {
 	@POST
 	@Path("/buy")
 	@Produces("application/json")
-	public boolean buy(@FormParam("userId") Long userId,
-			@FormParam("statementId") Long statementId,
+	public boolean buy(@FormParam("userId") String userId,
+			@FormParam("statementId") String statementId,
 			@FormParam("quantity") Long wantedQuantity) {
 		
 		User user = findUserById(userId);
@@ -75,8 +75,8 @@ public class TraderService implements ITraderService {
 	@POST
 	@Path("/sell")
 	@Produces("application/json")
-	public boolean sell(@FormParam("userId") Long userId,
-			@FormParam("statementId") Long statementId,
+	public boolean sell(@FormParam("userId") String userId,
+			@FormParam("statementId") String statementId,
 			@FormParam("quantity") Long quantity) {
 
 		User user = findUserById(userId);
@@ -119,12 +119,12 @@ public class TraderService implements ITraderService {
 	@GET
 	@Path("/check")
 	@Produces("application/json")
-	public Account checkBankAccount(@QueryParam("userId") Long userId) {
+	public Account checkBankAccount(@QueryParam("userId") String userId) {
 		 Account ac = findUserById(userId).getAccount();
 		 return ac;
 	}
 
-	private User findUserById(Long userId) {
+	private User findUserById(String userId) {
 		if (userId == null || "".equals(userId)) {
 			return null;
 		}

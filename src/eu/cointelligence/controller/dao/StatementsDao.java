@@ -1,14 +1,9 @@
 package eu.cointelligence.controller.dao;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-
-import com.sun.org.apache.bcel.internal.generic.ARRAYLENGTH;
 
 import eu.cointelligence.model.Statement;
 
@@ -27,6 +22,6 @@ public class StatementsDao extends GenericDaoImpl<Statement> {
 	public List<Statement> getStatements(){
 		Query q = em.createQuery("SELECT s from " + Statement.class.getName() + " as s");
 	
-		return (List) q.getResultList();
+		return (List<Statement>) q.getResultList();
 	}
 }

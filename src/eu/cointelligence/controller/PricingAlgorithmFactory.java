@@ -14,10 +14,10 @@ public class PricingAlgorithmFactory {
 	public static IPricingAlgorithm getPricingAlgorithm() {
 		// a dumb algorithm
 		return new IPricingAlgorithm() {
-
+ 
 			@Override
-			public Map<Long, Long> recalculate(
-					Map<Long, Long> oldPrices, List<Transaction> logs) {
+			public Map<String, Long> recalculate(
+					Map<String, Long> oldPrices, List<Transaction> logs) {
 
 				Iterator<Transaction> iterator = logs.iterator();
 //				int last10Counter = logs.size() - 10;

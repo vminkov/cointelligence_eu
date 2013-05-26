@@ -1,16 +1,13 @@
 package eu.cointelligence.controller.dao;
 
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
-
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+
+import eu.cointelligence.model.Transaction;
 
 @Stateless
 public abstract class GenericDaoImpl<T> implements GenericDao<T> {
@@ -43,7 +40,7 @@ public abstract class GenericDaoImpl<T> implements GenericDao<T> {
     public T create(final T t) {
         this.em.persist(t);
         return t;
-    }
+    } 
 
     @Override
     public void delete(final Object id) {
@@ -58,5 +55,13 @@ public abstract class GenericDaoImpl<T> implements GenericDao<T> {
     @Override
     public T update(final T t) {
         return this.em.merge(t);    
+    }
+    
+    @Override
+    public List<T> getAll() {
+		Query q = em.createQuery("SELECT t from " + type.getName() + " as t LIMIT 0, 1000");
+		
+		return (List<T>) q.getResultList();
+
     }
 }

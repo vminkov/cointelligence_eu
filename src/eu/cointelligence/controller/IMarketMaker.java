@@ -8,9 +8,9 @@ import eu.cointelligence.model.Transaction;
 public interface IMarketMaker {
 
 	// TODO javadoc
-	public abstract Map<Long, Long> getStatementsAndPrices();
+	public abstract Map<String, Long> getStatementsAndPrices();
 
-	public abstract Long getPriceForStatement(Long statementId);
+	public abstract Long getPriceForStatement(String statementId);
 
 	public abstract boolean addLog(Transaction log);
 
