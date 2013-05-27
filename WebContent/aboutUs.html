@@ -1,0 +1,221 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Home</title>
+    <meta charset="utf-8" />
+    <link href="styles/design.css" rel="stylesheet" />
+    <link rel="stylesheet" href="styles/jquery.css" />
+    <link href="styles/bootstrap-responsive.css" rel="stylesheet" />
+    <link href="styles/bootstrap.css" rel="stylesheet" />
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
+    <script src="scripts/widjest.js"></script>
+    <script src="scripts/bootstrap.js"></script>
+</head>
+<body>
+    <div id="wrapper">
+        <header>
+            <nav id="mainNav">
+                <ul id="mainUl" class="nav nav-tabs">
+                    <li ><a href="index.html">Начало</a></li>
+                    <li><a href="#tablesPart">Въпроси</a></li>
+                    <li><a href="#">Профил</a></li>
+                    <li><a href="#">Портфолио</a></li>
+                    <li class="active"><a href="aboutUs.html">За нас</a></li>
+                </ul>
+                <div id="signButtons" class="btn-group">
+                    <a href="#regForm" role="button" class="btn" data-toggle="modal">Регистрирай се!</a>
+                    <a href="#enterForm" role="button" class="btn" data-toggle="modal">Влез</a>
+                </div>
+                <!-- modal sign up -->
+                <div id="regForm" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h3 id="myModalLabel">Регистрирай се!</h3>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-horizontal">
+                            <div class="control-group">
+                                <label class="control-label" for="inputNickname">Псевдоним</label>
+                                <div class="controls">
+                                    <input type="text" id="inputNickname" placeholder="nickname" />
+                                </div>
+                            </div>
+
+                            <div class="control-group">
+                                <label class="control-label" for="inputName">Трите имена</label>
+                                <div class="controls">
+                                    <input type="text" id="inputName" placeholder="full name" />
+                                </div>
+                            </div>
+
+                            <div class="control-group">
+                                <label class="control-label" for="inputEmail">Email</label>
+                                <div class="controls">
+                                    <input type="text" id="inputEmail" placeholder="email" />
+                                </div>
+                            </div>
+
+                            <div class="control-group">
+                                <label class="control-label" for="inputPassword">Парола</label>
+                                <div class="controls">
+                                    <input type="password" id="inputPassword" placeholder="password" />
+                                </div>
+                            </div>
+
+                            <div class="control-group">
+                                <label class="control-label" for="department">Отдел</label>
+                                <div class="controls">
+                                    <select id="department">
+                                        <option>Финансов отдел</option>
+                                        <option>Маркетингов отдел</option>
+                                        <option>Човешки ресурси</option>
+                                        <option>Продажби</option>
+                                        <option>Поддръжка</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="control-group">
+                                <label class="control-label" for="male">Пол</label>
+                                <div class="controls">
+                                    <label class="radio">
+                                        <input type="radio" name="optionsRadios" id="male" value="мъж" />
+                                        Мъж
+                                    </label>
+                                    <label class="radio">
+                                        <input type="radio" name="optionsRadios" id="female" value="мъж" />
+                                        Жена
+                                    </label>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn" data-dismiss="modal" aria-hidden="true">Затвори</button>
+                        <button class="btn btn-primary">Регистрирай се!</button>
+                    </div>
+                </div>
+                <!-- modal sign ip -->
+                <!-- Modal -->
+                <div id="enterForm" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h3 id="H1">Влез!</h3>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-horizontal">
+                            <div class="control-group">
+                                <label class="control-label" for="inputNickname">Псевдоним</label>
+                                <div class="controls">
+                                    <input type="text" id="Text1" placeholder="nickname" />
+                                </div>
+                            </div>
+
+                            <div class="control-group">
+                                <label class="control-label" for="pass">Парола</label>
+                                <div class="controls">
+                                    <input type="text" id="pass" placeholder="password" />
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <div class="controls">
+                                    <label class="checkbox">
+                                        <input type="checkbox" />Запомни ме!</label>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn" data-dismiss="modal" aria-hidden="true">Затвори</button>
+                        <button class="btn btn-primary">Влез!</button>
+                    </div>
+                </div>
+            </nav>
+            <h1>
+                <img src="img/koki-logo.png" width="170" height="90" alt="koki-logo" id="logo" /></h1>
+        </header>
+        <section>
+            <h1 class="span12" style="text-align: center; margin-left: 150px">Екипът на KOKI</h1>
+
+            <hr width="100%" size="2px" color="grey" />
+
+            <div id="theTeam" style="margin-left:40px">
+                
+               
+                <div class="span3">
+                    <img src="img/cho.jpg" /><br />
+                    <span style="font-size: 0.70em">Ангел Куртев – CEO</span>
+                </div>
+                <div class="span3">
+                    <img src="img/silvi.jpg" /><br />
+                    <span style="font-size: 0.70em">С. Стойкова – Gamification Dep</span>
+                </div>
+                <div class="span3">
+                    <img src="img/asen.jpg" /><br />
+                    <span style="font-size: 0.70em">А. Рангелов - Gamification Dep</span>
+                </div>
+                <div class="span3">
+                    <img src="img/desi.jpg" /><br />
+                    <span style="font-size: 0.70em">Д. Караджова – PR & реклама</span>
+                </div>
+                <div class="span3">
+                    <img src="img/besho.jpg" /><br />
+                    <span style="font-size: 0.70em">А. Бешев – Гл. Счетоводител</span>
+                </div>
+                <div class="span3">
+                    <img src="img/stefi.jpg" /><br />
+                    <span style="font-size: 0.70em">С. Тачева – R&D department</span>
+                </div>
+                <div class="span3">
+                    <img src="img/val.jpg" /><br />
+                    <span style="font-size: 0.70em">В. Николова – Финансов Д-р</span>
+                </div>
+                <div class="span3">
+                    <img src="img/az.jpg" /><br />
+                    <span style="font-size: 0.70em">Б. Вълков - Програмист</span>
+                </div>
+                <div class="span3">
+                    <img src="img/veliko.jpg" /><br />
+                    <span style="font-size: 0.70em">В. Минков – Програмист</span>
+                </div>
+                <div class="span3">
+                    <img src="img/koki.jpg" /><br />
+                    <span style="font-size: 0.70em">Калоян Стоянов – Счетоводител</span>
+                </div>
+
+            </div>
+                <hr width="100%" size="2px" color="grey" />
+            <div id="contacts" class="span7" style="margin-left:60px">
+
+                        <p>Научете повече за колективната интелигентност от нашия <a href="http://colintelligence.wordpress.com/">блог</a>!</p>
+                        <p>Запишете се чрез вашия email за да сте първите, които ще научат, че сме пуснали продукт за тествене.
+                            <a href="http://signup.cointelligence.eu/">Тук!</a></p>
+                        <p>Пишете ни на адрес bonchovylkov@gmail.com</p>
+                         <p>Телефон:+359889099577</p>
+
+            </div>
+            <div id="general-informacion" class="span7">
+                <p>KОКИ е стартираща компания, която използва методите на колективната интелигентност за:<p>
+                    <ul>
+                        <li>Прогнозиране</li>
+                        <li>Оценяване на нови идеи</li>
+                        <li>Събиране на информация от всички нива в една организация</li>
+                        <li>Управление на проекти</li>
+                    </ul>
+
+            </div>
+        </section>
+        <footer>
+            <hr width="100%" size="5px" color="grey" />
+            <p>
+                KOKI Company Copyright  ©  
+            </p>
+        </footer>
+        <script src="scripts/scripts.js"></script>
+    </div>
+
+
+</body>
+</html>

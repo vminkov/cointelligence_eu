@@ -1,0 +1,260 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Home</title>
+    <meta charset="utf-8" />
+
+    <link rel="stylesheet" href="styles/jquery.css" />
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <link href="styles/bootstrap.css" rel="stylesheet" />
+    <link href="styles/bootstrap-responsive.css" rel="stylesheet" />
+    <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
+    <script src="scripts/widjest.js"></script>
+   
+    <script src="scripts/bootstrap.js"></script>
+    <link href="styles/design.css" rel="stylesheet" />
+</head>
+<body>
+    <p></p>
+    <div id="wrapper">
+        <header>
+            <nav id="mainNav">
+                <ul id="mainUl" class="nav nav-tabs">
+                    <li class="active"><a href="index.html">Начало</a></li>
+                    <li><a href="#tablesPart">Въпроси</a></li>
+                    <li><a href="#">Профил</a></li>
+                    <li><a href="#">Портфолио</a></li>
+                    <li><a href="aboutUs.html">За нас</a></li>
+                </ul>
+                <div id="signButtons" class="btn-group">
+                    <a href="#regForm" role="button" class="btn" data-toggle="modal">Регистрирай се!</a>
+                    <a href="#enterForm" role="button" class="btn" data-toggle="modal">Влез</a>
+                </div>
+                <!-- modal sign up -->
+                <div id="regForm" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h3 id="myModalLabel">Регистрирай се!</h3>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-horizontal">
+                            <div class="control-group">
+                                <label class="control-label" for="inputNickname">Псевдоним</label>
+                                <div class="controls">
+                                    <input type="text" id="inputNickname" placeholder="nickname" />
+                                </div>
+                            </div>
+
+                            <div class="control-group">
+                                <label class="control-label" for="inputName">Трите имена</label>
+                                <div class="controls">
+                                    <input type="text" id="inputName" placeholder="full name" />
+                                </div>
+                            </div>
+
+                            <div class="control-group">
+                                <label class="control-label" for="inputEmail">Email</label>
+                                <div class="controls">
+                                    <input type="text" id="inputEmail" placeholder="email" />
+                                </div>
+                            </div>
+
+                            <div class="control-group">
+                                <label class="control-label" for="inputPassword">Парола</label>
+                                <div class="controls">
+                                    <input type="password" id="inputPassword" placeholder="password" />
+                                </div>
+                            </div>
+
+                            <div class="control-group">
+                                <label class="control-label" for="department">Отдел</label>
+                                <div class="controls">
+                                    <select id="department">
+                                        <option>Финансов отдел</option>
+                                        <option>Маркетингов отдел</option>
+                                        <option>Човешки ресурси</option>
+                                        <option>Продажби</option>
+                                        <option>Поддръжка</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="control-group">
+                                <label class="control-label" for="male">Пол</label>
+                                <div class="controls">
+                                    <label class="radio">
+                                        <input type="radio" name="optionsRadios" id="male" value="мъж" />
+                                        Мъж
+                                    </label>
+                                    <label class="radio">
+                                        <input type="radio" name="optionsRadios" id="female" value="мъж" />
+                                        Жена
+                                    </label>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn" data-dismiss="modal" aria-hidden="true">Затвори</button>
+                        <button class="btn btn-primary">Регистрирай се!</button>
+                    </div>
+                </div>
+                <!-- modal sign ip -->
+                <!-- Modal -->
+                <div id="enterForm" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h3 id="H1">Влез!</h3>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-horizontal">
+                            <div class="control-group">
+                                <label class="control-label" for="inputNickname">Псевдоним</label>
+                                <div class="controls">
+                                    <input type="text" id="Text1" placeholder="nickname" />
+                                </div>
+                            </div>
+
+                            <div class="control-group">
+                                <label class="control-label" for="pass">Парола</label>
+                                <div class="controls">
+                                    <input type="text" id="pass" placeholder="password" />
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <div class="controls">
+                                    <label class="checkbox">
+                                        <input type="checkbox" />Запомни ме!</label>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn" data-dismiss="modal" aria-hidden="true">Затвори</button>
+                        <button class="btn btn-primary">Влез!</button>
+                    </div>
+                </div>
+            </nav>
+            <h1>
+                <img src="img/koki-logo.png" width="170" height="90" alt="koki-logo" id="logo" /></h1>
+        </header>
+
+        <div id="qestionBaloons">
+            <div id="questionWrapper" class="span5">
+
+                <a href="#modalQuestion" role="button" data-toggle="modal">
+                    <img src="img/question.png" width="400" /></a>
+
+                <div id="modalQuestion" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h3 id="H2">Задай въпрос!</h3>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-horizontal">
+                            <div class="control-group">
+                                <label class="control-label" for="headline">Заглавие на въпроса</label>
+                                <div class="controls">
+                                    <input type="text" class="headlineQuestion" id="headline" placeholder="short headline" />
+                                </div>
+                            </div>
+
+                            <div class="control-group">
+                                <label class="control-label" for="description">Описание на въпроса</label>
+                                <div class="controls">
+                                    <textarea id="description" placeholder="description"></textarea>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label for="date" class="control-label">Дата на падеж</label>
+                                <div class="controls">
+
+                                    <input type="datetime-local" id="date" />
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn" data-dismiss="modal" aria-hidden="true">Затвори</button>
+                        <button class="btn btn-primary">Задай въпроса!</button>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div id="ideaWrapper" class="span5">
+                <a href="#modalIdea" role="button" data-toggle="modal">
+                    <img src="img/idea.png" width="400" /></a>
+
+                <div id="modalIdea" class="modal hide fade " tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h3 id="H3">Пусни идея!</h3>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-horizontal">
+                            <div class="control-group">
+                                <label class="control-label" for="ideaHeadline">Заглавие на идеята</label>
+                                <div class="controls">
+                                    <input type="text" class="headlineQuestion" id="ideaHeadline" placeholder="short headline" />
+                                </div>
+                            </div>
+
+                            <div class="control-group">
+                                <label class="control-label" for="ideaDescription">Описание на идеята</label>
+                                <div class="controls">
+                                    <textarea id="ideaDescription" placeholder="idea description"></textarea>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn" data-dismiss="modal" aria-hidden="true">Затвори</button>
+                        <button class="btn btn-primary">Влез!</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!-- end of first section-->
+        <div id="tablesPart">
+            <div id="questionHeadline" class="span7">
+                <h1 class="questionsHeader">Bсички въпроси и идеи!</h1>
+                <h2 class="questionsSubHeader">Търгувай с тях и спечели точки за наградата!</h2>
+                <table id="statementsInfo">
+                    <tr>
+                        <td class="statementDivs" id="tableNumber">Номер</td>
+                        <td class="statementDivs" id="tableTitle">Заглавие</td>
+                        <td class="statementDivs" id="tableDescription">Описание</td>
+                        <td class="statementDivs" id="tablePrice">Цена</td>
+
+                    </tr>
+                </table>
+            </div>
+            <div id="rankingHeadline" class="span4">
+                <h1 class="rankHeader">Kласацията на играчите!</h1>
+                <h2 class="rankSubHeader">Търгувай и може ти да бъдеш тук!</h2>
+                <table id="rankTable">
+                    <tr>
+                        <td class="statementDivs" id="userName">Username</td>
+                        <!--<td class="statementDivs" id="Money">Gained Money So Far</td>-->
+                        <td class="statementDivs" id="cointels">Cointels</td>
+                    </tr>
+
+                </table>
+            </div>
+        </div>
+    </div>
+    <aside>
+    </aside>
+    <footer>
+        <hr width="100%" size="5px" color="grey" />
+        <p>
+            KOKI Company Copyright  ©  
+        </p>
+    </footer>
+     <script src="scripts/scripts.js"></script>
+</body>
+</html>
