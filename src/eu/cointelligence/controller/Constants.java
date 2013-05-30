@@ -13,5 +13,6 @@ public class Constants {
 	
 	public static final String AUTHENTICATION_FILTER_EXCLUDE_URI_REGEX_PARAM_NAME = "exclude-uri-regex";
 	public static final String INVALID_AUTHENTICATION_PAGE = "loginfail.jsp";
+	public static final Long DEFAULT_COINTELS = new Long(2000);
 
 }

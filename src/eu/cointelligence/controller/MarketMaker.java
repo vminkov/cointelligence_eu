@@ -24,12 +24,12 @@ public class MarketMaker implements IMarketMaker {
 	private StatementsDao statementsDao;
 	
 	
-	private Map<String, Long> statementsAndPrices;
+	private Map<Long, Long> statementsAndPrices;
 
     @PostConstruct
     public void init() {
         System.out.println("MarketMaker.initCache");
-        this.statementsAndPrices = new HashMap<String, Long>();
+        this.statementsAndPrices = new HashMap<Long, Long>();
 		List<Statement> statements = statementsDao.getStatements();
 		
 		for (Statement statement : statements) {
@@ -43,12 +43,12 @@ public class MarketMaker implements IMarketMaker {
 
 	
 	@Override
-	public Map<String, Long> getStatementsAndPrices() {
+	public Map<Long, Long> getStatementsAndPrices() {
 		return this.statementsAndPrices;
 	}
 
 	@Override
-	public Long getPriceForStatement(String statementId) {
+	public Long getPriceForStatement(Long statementId) {
 		return this.statementsDao.find(statementId).getCurrentValue();
 	}
 
@@ -71,7 +71,7 @@ public class MarketMaker implements IMarketMaker {
 		statementsAndPrices = PricingAlgorithmFactory.getPricingAlgorithm().recalculate(statementsAndPrices, logs);
 		
 		//TODO: batch commit(see comment below)
-		for (String stId : this.statementsAndPrices.keySet()) {
+		for (Long stId : this.statementsAndPrices.keySet()) {
 			Statement st = this.statementsDao.find(stId);
 			st.setCurrentValue(this.statementsAndPrices.get(stId));
 			statementsDao.update(st);

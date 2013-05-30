@@ -4,7 +4,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import eu.cointelligence.controller.entity.TradingAction;
+import eu.cointelligence.controller.entity.beans.TradingAction;
 import eu.cointelligence.model.Statement;
 import eu.cointelligence.model.Transaction;
 
@@ -16,8 +16,8 @@ public class PricingAlgorithmFactory {
 		return new IPricingAlgorithm() {
  
 			@Override
-			public Map<String, Long> recalculate(
-					Map<String, Long> oldPrices, List<Transaction> logs) {
+			public Map<Long, Long> recalculate(
+					Map<Long, Long> oldPrices, List<Transaction> logs) {
 
 				Iterator<Transaction> iterator = logs.iterator();
 //				int last10Counter = logs.size() - 10;

@@ -4,7 +4,8 @@
             <nav id="mainNav">
                 <ul id="mainUl" class="nav nav-tabs">
                     <li class="active"><a href="#">Начало</a></li>
-                    <li><a href="#tablesPart">Въпроси</a></li>
+                    <li><a href="manager.jsp">Мениджър</a></li>
+                    <li><a href="employee.jsp">Служител</a></li>
                     <li><a href="#">Профил</a></li>
                     <li><a href="#">Портфолио</a></li>
                     <li><a href="#">За нас</a></li>

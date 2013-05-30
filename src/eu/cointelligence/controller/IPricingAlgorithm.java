@@ -6,5 +6,5 @@ import java.util.Map;
 import eu.cointelligence.model.Transaction;
 
 public interface IPricingAlgorithm {
-	public Map<String, Long> recalculate(Map<String, Long> oldPrices, List<Transaction> logs);
+	public Map<Long, Long> recalculate(Map<Long, Long> oldPrices, List<Transaction> logs);
 }

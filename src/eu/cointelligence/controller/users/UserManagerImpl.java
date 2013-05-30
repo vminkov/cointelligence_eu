@@ -4,23 +4,30 @@ import java.io.UnsupportedEncodingException;
 import java.security.InvalidParameterException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.HashMap;
+import java.util.List;
 
+import javax.ejb.EJB;
 import javax.ejb.Singleton;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.resource.spi.SecurityException;
 
+import eu.cointelligence.controller.Constants;
+import eu.cointelligence.controller.dao.AccountsDao;
+import eu.cointelligence.controller.dao.UsersDao;
 import eu.cointelligence.controller.users.exceptions.UserCreationException;
 import eu.cointelligence.controller.users.exceptions.UserExistsException;
 import eu.cointelligence.controller.users.exceptions.WrongPasswordException;
+import eu.cointelligence.model.Account;
 import eu.cointelligence.model.User;
 
 @Singleton
 public class UserManagerImpl implements IUserManager {
 
-	@PersistenceContext
-	private EntityManager entityManager;
-
+	@EJB
+	private UsersDao usersDao;
+	@EJB
+	private AccountsDao accountsDao;
+	
 	@Override
 	public void removeUser(String username, String comment) {
 		// TODO Auto-generated method stub
@@ -36,10 +43,11 @@ public class UserManagerImpl implements IUserManager {
 
 		final String userSearch = username.toLowerCase();
 
-		User user = this.entityManager.find(User.class, userSearch);
+		User user = this.usersDao.find(userSearch);
 		if(user == null) {
 			throw new NoSuchUserException();
 		}
+		
 		UserRole role = user.getRole();
 		if (role == null || !role.equals(loginType)) {
 			throw new SecurityException();
@@ -63,7 +71,7 @@ public class UserManagerImpl implements IUserManager {
 
 		final String userSearch = username.toLowerCase();
 
-		User user = this.entityManager.find(User.class, userSearch);
+		User user = this.usersDao.find(userSearch);
 		if(user == null){
 			throw new NoSuchUserException();
 		}
@@ -87,7 +95,7 @@ public class UserManagerImpl implements IUserManager {
 
 		final String userSearch = username.toLowerCase();
 
-		User user = this.entityManager.find(User.class, userSearch);
+		User user = this.usersDao.find(userSearch);
 		try {
 			if (user != null) {
 				System.out.println("found the user " + user.getUserName());
@@ -117,11 +125,17 @@ public class UserManagerImpl implements IUserManager {
 				user.setRole(UserRole.USER);
 				// user.removed = Boolean.valueOf(false);
 				// user.confirmed = Boolean.valueOf(true);
+				Account newAccount = accountsDao.create(new Account());
+				
+				newAccount.setCointels(Constants.DEFAULT_COINTELS);
+				newAccount.setStatementsInPossession(new HashMap<Long, Long>());
+				
+				user.setAccount(newAccount);
 				System.out.println("creating user " + user.getUserName()
 						+ " with pass " + user.getPassword());
 			}
 
-			this.entityManager.merge(user);
+			this.usersDao.update(user);
 			return user;
 		} catch (UnsupportedEncodingException | NoSuchAlgorithmException e) {
 			e.printStackTrace();
@@ -150,7 +164,7 @@ public class UserManagerImpl implements IUserManager {
 
 		final String userSearch = username.toLowerCase();
 
-		User user = this.entityManager.find(User.class, userSearch);
+		User user = this.usersDao.find(userSearch);
 
 		return user.getRole().equals(UserRole.ADMIN);
 	}
@@ -163,7 +177,7 @@ public class UserManagerImpl implements IUserManager {
 
 		final String userSearch = username.toLowerCase();
 
-		User user = this.entityManager.find(User.class, userSearch);
+		User user = this.usersDao.find(userSearch);
 
 		return user.getRole().equals(UserRole.MANAGER);
 	}
@@ -176,7 +190,7 @@ public class UserManagerImpl implements IUserManager {
 
 		final String userSearch = username.toLowerCase();
 
-		User user = this.entityManager.find(User.class, userSearch);
+		User user = this.usersDao.find(userSearch);
 
 		return user.getRole().equals(UserRole.USER);
 	}
@@ -189,7 +203,7 @@ public class UserManagerImpl implements IUserManager {
 
 		final String userSearch = username.toLowerCase();
 
-		return this.entityManager.find(User.class, userSearch);
+		return this.usersDao.find(userSearch);
 
 	}
 
@@ -198,8 +212,17 @@ public class UserManagerImpl implements IUserManager {
 		// do not update the password from here
 		if (user.getPassword() != null)
 			return null;
-
-		this.entityManager.merge(user);
+		
+		User result = this.usersDao.find(user.getUserName());
+		User merged = this.usersDao.update(result);
+				
+		merged.setAge(user.getAge());
+		merged.setDepartment(user.getDepartment());
+		merged.setEmail(user.getEmail());
+		merged.setFullName(user.getFullName());
+		merged.setGender(user.getGender());
+		merged.setRole(user.getRole());
+		
 		return user;
 	}
 
@@ -219,6 +242,11 @@ public class UserManagerImpl implements IUserManager {
 		}
 		
 		return hexString.toString();
+	}
+
+	@Override
+	public List<User> getAllUsers() {
+		return this.usersDao.getAll();
 	}
 
 }

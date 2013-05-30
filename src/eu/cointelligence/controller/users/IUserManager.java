@@ -1,5 +1,7 @@
 package eu.cointelligence.controller.users;
 
+import java.util.List;
+
 import javax.resource.spi.SecurityException;
 
 import eu.cointelligence.controller.users.exceptions.UserCreationException;
@@ -119,4 +121,6 @@ public interface IUserManager {
 
 	User loginWithCookie(String username, byte[] passwordHash,
 			UserRole loginType) throws WrongPasswordException, SecurityException, NoSuchUserException;
+
+	List<User> getAllUsers();
 }

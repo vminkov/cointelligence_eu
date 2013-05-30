@@ -23,4 +23,6 @@ public interface GenericDao<T> {
     T update(T t);
 
 	List<T> getAll();   
+	
+	List<T> filter(String fieldName, Object value);
 }

@@ -1,7 +1,6 @@
 package eu.cointelligence.controller;
 
 import java.util.List;
-import java.util.UUID;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -34,9 +33,7 @@ public class StatementsService {
 	@Produces(MediaType.APPLICATION_JSON)
 	public boolean submitStatement(@FormParam("newStatement") Statement statement){
 		if(statement != null){
-			// set the ID 
-			statement.setId(UUID.randomUUID().toString());
-
+			
 			//if (user is not manager)
 			//set voteStarted to false
 			//current price to default

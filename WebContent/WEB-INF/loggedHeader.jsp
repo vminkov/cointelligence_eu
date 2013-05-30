@@ -1,21 +1,27 @@
 <%@page import="eu.cointelligence.model.User"%>
 <%@page import="eu.cointelligence.controller.Constants"%>
 <header>
-	<%
-		User userInfo = (User) ((HttpSession) session)
-				.getAttribute(Constants.USER_INFO_SESSION_ATTR_NAME);
-	%>
+
+<%!User user;%>
+<%
+	user = (User) ((HttpSession) session)
+			.getAttribute(Constants.USER_INFO_SESSION_ATTR_NAME);
+%>
 	<nav id="mainNav">
-	<span>Здравей, <%=userInfo.getFullName()%></span>
+	<script>var userrmation = {};
+				userrmation.username = <%=user.getUserName()%>;
+				userrmation.avatar = <%=user.getUserName()%>; </script>
+		<span>Здравей, <%=user.getUserName()%></span>
 		<ul id="mainUl" class="nav nav-tabs">
 			<li class="active"><a href="#">Начало</a></li>
 			<li><a href="#tablesPart">Въпроси</a></li>
-			<li><a href="#">Профил</a></li>
+			<li><a href="manager.jsp">Мениджър</a></li>
+			<li><a href="employee.jsp">Служител</a></li>
 			<li><a href="#">Портфолио</a></li>
 			<li><a href="#">За нас</a></li>
 		</ul>
 		<form action="<%=Constants.LOGOUT_PAGE%>">
-			<input type="submit" class="btn btn-primary" value="Изход"/>
+			<input type="submit" class="btn btn-primary" value="Изход" />
 		</form>
 	</nav>
 	<h1>

@@ -6,8 +6,10 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-
-import eu.cointelligence.model.Transaction;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 
 @Stateless
 public abstract class GenericDaoImpl<T> implements GenericDao<T> {
@@ -59,9 +61,26 @@ public abstract class GenericDaoImpl<T> implements GenericDao<T> {
     
     @Override
     public List<T> getAll() {
-		Query q = em.createQuery("SELECT t from " + type.getName() + " as t LIMIT 0, 1000");
+		Query q = em.createQuery("SELECT t from " + type.getName() + " as t");
+		
 		
 		return (List<T>) q.getResultList();
 
+    }
+    
+    @Override
+    public List<T> filter(String fieldName, Object value) {
+    	CriteriaBuilder cb = this.em.getCriteriaBuilder();
+    	CriteriaQuery criteriaQuery = cb.createQuery();
+    	Root<T> tRoot = criteriaQuery.from(this.type);
+    	
+    	criteriaQuery.select(tRoot);
+    	
+    	Predicate predicate = cb.equal(tRoot.get(fieldName), value);
+    	criteriaQuery.where(predicate);
+    	
+    	Query q  = this.em.createQuery(criteriaQuery);
+    	
+    	return q.getResultList();
     }
 }

@@ -1,29 +1,28 @@
 package eu.cointelligence.controller.users;
 
 public enum UserRole {
-	USER(0), MANAGER(1), ADMIN(2);
+	USER("USER"), MANAGER("MANAGER"), ADMIN("ADMIN");
 
-	private int value;
+	private final String value;
 
-	UserRole(int value) {
-		this.value = value;
+	UserRole(String str) {
+		this.value = str;
 	}
 
-	// the identifierMethod
-	public int toInt() {
+	public static UserRole fromValue(String value) {
+		if (value != null) {
+			for (UserRole role : values()) {
+				if (role.value.equals(value)) {
+					return role;
+				}
+			}
+		}
+
+		throw new IllegalArgumentException("Invalid UserRole: " + value);
+	}
+
+	public String toValue() {
 		return value;
 	}
 
-	public static UserRole fromInt(int value) {
-		switch (value) {
-		case 0:
-			return USER;
-		case 1:
-			return MANAGER;
-		case 2:
-			return ADMIN;
-		default:
-			return USER;
-		}
-	}
 }

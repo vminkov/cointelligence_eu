@@ -46,7 +46,7 @@
 		<init-param>
 			<description></description>
 			<param-name>exclude-uri-regex</param-name>
-			<param-value>((^/(.+)/login.jsp$)|(^/(.+)/userLogin$))</param-value>
+			<param-value>((^/(.+)/login.jsp$)|(^/(.+)/userLogin$)|(^/(.+)/index.jsp$))</param-value>
 		</init-param>
 	</filter>
 	<filter-mapping>

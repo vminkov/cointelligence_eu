@@ -1,32 +1,10 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <!--  insert head  -->
 <%@include file="head.jsp"%>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta charset="utf-8" />
-
-<%!User userInfo;%>
-<%
-	userInfo = (User) ((HttpSession) session)
-			.getAttribute(Constants.USER_INFO_SESSION_ATTR_NAME);
-%>
 <!--  insert header  -->
-<%
-	if (userInfo != null) {
-%>
 <%@include file="WEB-INF/loggedHeader.jsp"%>
-<%
-	} else {
-%>
-<%@include file="WEB-INF/header.jsp"%>
-
-<%
-	}
-%>
-
 
 <body>
 	<div id="wrapper">
@@ -34,7 +12,7 @@
 		<!-- ЗА ДА ВЛЕЗЕШ В МЕНИДЖЪРСКИЯ ПАНЕЛ НАТИСНИ ГОРЕ "МЕНИДЖЪР" -->
 		<!-- ЗА ДА ВЛЕЗЕШ В СЛУЖИТЕЛСКИЯ ПАНЕЛ НАТИСНИ ГОРЕ "СЛУЖИТЕЛ" -->
 		<div id="tablesPart">
-			<!--  insert statements table -->
+			<%@include file="WEB-INF/questions.jsp"%>
 			<%@include file="WEB-INF/statementsTable.jsp"%>
 
 			<!--  insert rankings table -->
@@ -45,7 +23,7 @@
 
 		</div>
 	</div>
-	<%@include file="WEB-INF/foot.jsp"%>
+			<%@include file="WEB-INF/foot.jsp"%>
 </body>
 
 </html>

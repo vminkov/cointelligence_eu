@@ -1,4 +1,4 @@
-package eu.cointelligence.controller.entity;
+package eu.cointelligence.controller.entity.beans;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonParseException;

@@ -11,7 +11,7 @@ import javax.ws.rs.QueryParam;
 
 import eu.cointelligence.controller.dao.StatementsDao;
 import eu.cointelligence.controller.dao.UsersDao;
-import eu.cointelligence.controller.entity.TradingAction;
+import eu.cointelligence.controller.entity.beans.TradingAction;
 import eu.cointelligence.model.Account;
 import eu.cointelligence.model.Statement;
 import eu.cointelligence.model.Transaction;
@@ -46,7 +46,7 @@ public class TraderService implements ITraderService {
 		
 		Statement statement = statementsDao.find(statementId);
 		Long statementPrice = statement.getCurrentValue();
-		Account account = user.getAccount();
+		Account account = user.getAccount(); 
 		Long availableCash = account.getCointels();
 		if ((statementPrice == null || availableCash == null)
 				|| (availableCash <= statementPrice * wantedQuantity)) {

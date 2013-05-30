@@ -1,4 +1,4 @@
-package eu.cointelligence.controller.entity;
+package eu.cointelligence.controller.entity.beans;
 
 public enum TradingAction {
 		BUY, SELL, SHORTSELL;

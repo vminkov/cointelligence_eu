@@ -1,5 +1,7 @@
 package eu.cointelligence.controller;
 
+import java.util.List;
+
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ws.rs.Consumes;
@@ -16,7 +18,7 @@ import javax.ws.rs.core.UriInfo;
 
 import org.jboss.resteasy.spi.HttpResponse;
 
-import eu.cointelligence.controller.entity.RegisterForm;
+import eu.cointelligence.controller.entity.beans.RegisterForm;
 import eu.cointelligence.controller.users.IUserManager;
 import eu.cointelligence.controller.users.NoSuchUserException;
 import eu.cointelligence.controller.users.UserRole;
@@ -69,13 +71,14 @@ public class UsersService {
 			newUser.setAge(regForm.getAge());
 			newUser.setGender(regForm.getGender());
 			newUser.setDepartment(regForm.getDepartment());
-			
+			newUser.setEmail(regForm.getEmail());
+			newUser.setPassword(null);//so it can update
+
 			userManager.updateUserInfo(newUser);
 		}catch(SecurityException | UserCreationException e){
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("ooops").build();
 		}
 		
-		newUser.setPassword(null);
 		return Response.ok(newUser, MediaType.APPLICATION_JSON).build();
 	}
 	
@@ -83,5 +86,12 @@ public class UsersService {
 	@Path("/userExists")
 	public boolean checkUser(@FormParam("username") String username) {
 		return this.userManager.isUser(username);
+	}
+	
+	@GET
+	@Path("/allUsers")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<User> getUsers(){
+		return this.userManager.getAllUsers();
 	}
 }

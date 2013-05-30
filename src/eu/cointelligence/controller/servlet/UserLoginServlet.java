@@ -17,6 +17,8 @@ import eu.cointelligence.controller.Constants;
 import eu.cointelligence.controller.users.IUserManager;
 import eu.cointelligence.controller.users.UserManagerImpl;
 import eu.cointelligence.controller.users.UserRole;
+import eu.cointelligence.controller.users.exceptions.UserCreationException;
+import eu.cointelligence.controller.users.exceptions.UserExistsException;
 import eu.cointelligence.model.User;
 
 /**
@@ -34,7 +36,23 @@ public class UserLoginServlet extends HttpServlet {
     public UserLoginServlet() {
         super();
     }
-
+    
+    @Override
+    public void init() throws ServletException {
+    	super.init();
+    	if(userManager.getAllUsers().size() == 0) {
+    		try {
+    			System.out.println("Created ADMIN account with user/pass: " + "admin / kokikoki");
+				userManager.createNewUser("admin", "kokikoki");
+			} catch (UserExistsException e) {
+				System.out.println("This could never happen");
+				e.printStackTrace();
+			} catch (UserCreationException e) {
+				System.out.println("that's bad - there is no admin account - create one from the database");
+				e.printStackTrace();
+			}
+    	}
+    }
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */

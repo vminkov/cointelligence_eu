@@ -1,4 +1,4 @@
-package eu.cointelligence.controller.entity;
+package eu.cointelligence.controller.entity.beans;
 
 public class Order {
 

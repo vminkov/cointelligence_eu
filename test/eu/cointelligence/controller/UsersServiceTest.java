@@ -5,8 +5,8 @@ import javax.naming.NamingException;
 import org.junit.Before;
 import org.junit.Test;
 
-import eu.cointelligence.controller.entity.Gender;
-import eu.cointelligence.controller.entity.RegisterForm;
+import eu.cointelligence.controller.entity.beans.Gender;
+import eu.cointelligence.controller.entity.beans.RegisterForm;
 
 public class UsersServiceTest {
 

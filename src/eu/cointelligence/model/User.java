@@ -5,8 +5,9 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
-import eu.cointelligence.controller.entity.Gender;
+import eu.cointelligence.controller.entity.beans.Gender;
 import eu.cointelligence.controller.users.UserRole;
 
 @Entity
@@ -22,17 +23,17 @@ public class User {
 	private String passwordHash;
 	@Basic
 	private String email;
-
 	@Basic
-	private String password; //the cookie
+	private String password;
 	@Basic
-	private UserRole role;
+	private String roleString;
 	@Basic
 	private int age;
 	@Basic
-	private Gender gender;
+	private String genderString;
 	@Basic 
 	private String department;
+		
 	public int getAge() {
 		return age;
 	}
@@ -42,11 +43,11 @@ public class User {
 	}
 
 	public Gender getGender() {
-		return gender;
+		return Gender.valueOf(this.genderString);
 	}
 
 	public void setGender(Gender gender) {
-		this.gender = gender;
+		this.genderString = gender.toString();
 	}
 
 	public String getDepartment() {
@@ -93,11 +94,11 @@ public class User {
 	}
 
 	public void setRole(UserRole param) {
-		this.role = param;
+		this.roleString = param.toString();				
 	}
 
 	public UserRole getRole() {
-		return role;
+		return UserRole.valueOf(roleString);
 	}
 
 	public Account getAccount() {
