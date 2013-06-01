@@ -12,8 +12,8 @@
 %>
 	<nav id="mainNav">
 	<script>var userrmation = {};
-				userrmation.username = <%=user.getUserName()%>;
-				userrmation.avatar = <%=user.getUserName()%>; </script>
+				userrmation.username = "<%=user.getUserName()%>";
+				userrmation.password = "<%=user.getPasswordHash()%>"; </script>
 		<span>Здравей, <%=user.getUserName()%></span>
 		<ul id="mainUl" class="nav nav-tabs">
 			<li class="active"><a href="#">Начало</a></li>

@@ -1,7 +1,20 @@
-﻿(function customJS() {
+﻿  function customJS() {
     var paths = {};
-    paths.stetements = 'http://www.cointelligence.eu:8080/cointelligence_eu/rest/statements';
+    paths.stetements = 'http://localhost:8080/cointelligence_eu/rest/statements';
     paths.users = 'testJSON/users.js';
+//    counter = 0;
+//    function nalqvo(){
+//    	counter--;
+//    }
+//    function nadqsno()	{
+//    	conter++;
+//    }
+//    
+//    
+//    for(i = 0 ; i<7; i++){
+//    	index = (counterPages % 4) *7 + i;
+//    	obj = data[index];
+//    }
     var test = $.getJSON(paths.stetements, function (data) {
         $.each(data, function (index, obj) {
             var row = $('<tr class="questionRow"/>');
@@ -119,7 +132,7 @@
                     "type": "POST",
                     "data": data
                 }).success(function (data) {
-                    console.log(data)
+                	console.log(data);
                 });
             }
         }
@@ -246,13 +259,13 @@
                 "<label class='control-label'>Избери твърдерние с определена цена:</label>" +
                 "<div class='controls stetementContainer'>" +
                 "<label><i class='icon-hand-up'></i>" +
-                "<input type='radio' id='yesStetement" + obj.id + "' class='selectQuontity' name='stetement' value='yes' '> Да, ще се случи и искам да купя:" +
+                "<input type='radio' id='yesStetement" + obj.id + "' class='selectQuontity' name='stetement' value='buy' '> Да, ще се случи и искам да купя:" +
                 "<input type='text' id='yesQuontity" + obj.id + "' class='quontityField'  style='width:50px;display:none' /></label><br/><br/>" +
                 "<label><i class='icon-hand-down'></i>" +
-                 "<input type='radio'id='noStetement" + obj.id + "' class='selectQuontity' name='stetement' value='no'> Не,няма да се случи и искам да купя:" +
+                 "<input type='radio'id='noStetement" + obj.id + "' class='selectQuontity' name='stetement' value='sell'> Не,няма да се случи и искам да купя:" +
                  "<input type='text' id='noQuontity" + obj.id + "' class='quontityField' style='width:50px;display:none'/></label><br/>" +
                 "<label><i class='icon-hand-down'></i>" +
-                 "<input type='radio'id='shortSaleStetement" + obj.id + "' class='selectQuontity' name='stetement' value='shortSale'>Продавам за определено време, като се задължавам да си го купя обратно, максимум след два дни!" +
+                 "<input type='radio'id='shortSaleStetement" + obj.id + "' class='selectQuontity' name='stetement' value='shortSell'>Продавам за определено време, като се задължавам да си го купя обратно, максимум след два дни!" +
                  "<input type='text' id='shortSale"+ obj.id + "' class='quontityField' style='width:50px;display:none'/></label><br/>" +
                 "</div>" +
                 "</div>" +
@@ -273,14 +286,14 @@
                 "</div>" +
                 "<div class='modal-footer'>" +
                 "<button class='btn' data-dismiss='modal' aria-hidden='true'>Затвори</button>" +
-                "<button class='btn btn-primary sendForm' id='sendFormButton" + obj.id + "'>Направи сделката!</button></div>";
+                "<button  data-dismiss='modal' aria-hidden='true'  class='btn btn-primary sendForm' id='sendFormButton" + obj.id + "'>Направи сделката!</button></div>";
     }
 
     function usersTest(obj,event) {
         var data = {};
         var dealForm = {};
 
-        dealForm.id = obj.id;
+        dealForm.statementId = obj.id;
         dealForm.title = obj.title;
         dealForm.currentValue = obj.currentValue;
         var yesStatement = document.getElementById("yesStetement" + obj.id);
@@ -293,8 +306,15 @@
             var selected = noStatement;
             var selectedInput = noStatement.value;
         }
-
-        dealForm.selectedStatement = selectedInput;
+        
+        var shortSellStatement = document.getElementById("shortSale"+obj.id);
+        if (shortSellStatement.checked == true) {
+            var selected = shortSellStatement;
+            var selectedInput = shortSellStatement.value;
+        }
+        
+        
+        dealForm.selectedStatement = selectedInput;// buy sell shortSell
         if (selected) {
             if (selected.nextElementSibling.value<1) {
                 alert("Броя акции трябва да е положителен!")
@@ -302,21 +322,22 @@
             if (!(parseInt(selected.nextElementSibling.value))) {
                 alert("Броя акции трябва да е число по възможност!")
             }
-            dealForm.statementValue = selected.nextElementSibling.value | 0;
-            dealForm.summaryValue = dealForm.statementValue * parseFloat(dealForm.currentValue);
+            dealForm.quantity = selected.nextElementSibling.value | 0;
         }else{
             alert("Избери опция за да търгуваш с твърдението!")
         }
+        dealForm.username = userrmation.username;
         
+        dealForm.password = userrmation.password;
         data.dealForm = JSON.stringify(dealForm);
-        data.time = time;
-        url = "http://localhost:8080/cointelligence_eu/rest/login/register";
+        url = "http://localhost:8080/cointelligence_eu/rest/trader/"+selectedInput;
         $.ajax({
             "url": url,
             "type": "POST",
-            "data": data
+            "data": dealForm
         }).success(function (data) {
-            console.log(data)
+            
+           customJS();
         });
     }
     function showStetementQuontity(event) {
@@ -365,11 +386,14 @@
         }
         
     }
-
+	return 
+	{
+		reload:customJS
+	}
     
 
-}());
-
+};
+customJS();
 
 
 
