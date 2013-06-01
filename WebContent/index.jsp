@@ -5,8 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <!--  insert head  -->
 <%@include file="head.jsp"%>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta charset="utf-8" />
+
 
 <%!User userInfo;%>
 <%

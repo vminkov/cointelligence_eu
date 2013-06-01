@@ -2,6 +2,11 @@ package eu.cointelligence.controller.entity.beans;
 
 import java.io.Serializable;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonParseException;
+
+import eu.cointelligence.model.Statement;
+
 
 public class StatementBean implements Serializable{
 	private String title;
@@ -32,5 +37,19 @@ public class StatementBean implements Serializable{
 	}
 	public void setCurrentValue(Long currentValue) {
 		this.currentValue = currentValue;
+	}
+	
+	
+	private static Gson gson = new Gson();
+
+	public static StatementBean valueOf(String s) {
+		StatementBean statement = null;
+		try {
+			statement = gson.fromJson(s, StatementBean.class);
+		} catch (JsonParseException e) {
+			// TODO: adequate exception logging
+			e.printStackTrace();
+		}
+		return statement;
 	}
 }

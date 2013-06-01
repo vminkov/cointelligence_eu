@@ -1,8 +1,11 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@page import="eu.cointelligence.model.User"%>
 <%@page import="eu.cointelligence.controller.Constants"%>
 <head>
     <title>Home</title>
-
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8" />
     <link rel="stylesheet" href="styles/jquery.css" />
     <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
     <link href="styles/bootstrap.css" rel="stylesheet" />

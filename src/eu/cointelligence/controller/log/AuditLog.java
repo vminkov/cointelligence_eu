@@ -26,7 +26,6 @@ public class AuditLog {
 
 	public synchronized boolean log(String operation, String user, boolean status, String ip, String message) {
 		String auditLogPath = context.getRealPath("/WEB-INF/logs/audit.log");
-		System.out.println("auditlog " + auditLogPath);
 		FileWriter fileWriter = null;
 		File auditLog = new File(auditLogPath);
 		try {
@@ -35,7 +34,7 @@ public class AuditLog {
 				auditLog.createNewFile();
 			}
 			fileWriter = new FileWriter(auditLogPath, true);
-			fileWriter.write("Operation " + operation + " for user " + user + " - " + (status?"SUCCESS":"FAILED") + " from ip " + ip +  " at " + new Date().toString() + (message != null?" reason" + message + " " : "") + "\n");
+			fileWriter.write("Operation " + operation + " for user " + user + " - " + (status?"SUCCESS":"FAILED") + " from ip " + ip +  " at " + new Date().toString() + (message != null?" reason " + message + " " : "") + "\n");
 			return true;
 		} catch (IOException e) {
 			e.printStackTrace();

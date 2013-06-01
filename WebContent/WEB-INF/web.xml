@@ -4,7 +4,10 @@
 	xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
 	id="WebApp_ID" version="2.4">
-	<display-name>Restful Web Application</display-name>
+	<display-name>cointelligence.eu</display-name>
+	<welcome-file-list>
+		<welcome-file>/login.jsp</welcome-file>
+	</welcome-file-list>
 	<context-param>
 		<param-name>resteasy.scan</param-name>
 		<param-value>true</param-value>
@@ -46,12 +49,14 @@
 		<init-param>
 			<description></description>
 			<param-name>exclude-uri-regex</param-name>
-			<param-value>((^/(.+)/login.jsp$)|(^/(.+)/userLogin$)|(^/(.+)/index.jsp$))</param-value>
+			<param-value>((^/(.+)/login.jsp$)|(^/(.+)/userLogin$)|(^/(.+)/index.jsp$)|(^/(.+)/styles(/(.+)$))|(^/(.+)/scripts(/(.+))$)|(^/(.+)/img(/(.+)$))) </param-value>
 		</init-param>
 	</filter>
 	<filter-mapping>
 		<filter-name>AuthenticationFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
-
+	<listener>
+		<listener-class>eu.cointelligence.listeners.ApplicationStartedListener</listener-class>
+	</listener>
 </web-app>

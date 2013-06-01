@@ -1,3 +1,6 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+
 	<div id="questionHeadline" class="span7">
 		<h1 class="questionsHeader">Bсички въпроси и идеи!</h1>
 		<h2 class="questionsSubHeader">Търгувай с тях и спечели точки за

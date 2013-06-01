@@ -49,6 +49,7 @@ public class UserManagerImpl implements IUserManager {
 		}
 		
 		UserRole role = user.getRole();
+		//TODO: smarter check according to the hierarchy
 		if (role == null || !role.equals(loginType)) {
 			throw new SecurityException();
 		}

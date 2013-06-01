@@ -15,7 +15,6 @@ import eu.cointelligence.controller.users.UserRole;
 @Entity
 @Table(name = "T_STATEMENT")
 public class Statement {
-	private static Gson gson = new Gson();
 	// private static transient Gson gson = new Gson(); ?
 	@Basic
 	private String title;
@@ -61,17 +60,6 @@ public class Statement {
 
 	public Long getCurrentValue() {
 		return currentValue;
-	}
-
-	public static Statement valueOf(String s) {
-		Statement statement = null;
-		try {
-			statement = gson.fromJson(s, Statement.class);
-		} catch (JsonParseException e) {
-			// TODO: adequate exception logging
-			e.printStackTrace();
-		}
-		return statement;
 	}
 
 	public void setId(Long param) {

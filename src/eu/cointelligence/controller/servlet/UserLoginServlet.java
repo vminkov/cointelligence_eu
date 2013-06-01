@@ -1,24 +1,22 @@
 package eu.cointelligence.controller.servlet;
 
 import java.io.IOException;
-import java.util.Locale;
-import java.util.ResourceBundle;
-
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import eu.cointelligence.controller.Constants;
+import eu.cointelligence.controller.log.AuditLog;
 import eu.cointelligence.controller.users.IUserManager;
-import eu.cointelligence.controller.users.UserManagerImpl;
+import eu.cointelligence.controller.users.NoSuchUserException;
 import eu.cointelligence.controller.users.UserRole;
 import eu.cointelligence.controller.users.exceptions.UserCreationException;
 import eu.cointelligence.controller.users.exceptions.UserExistsException;
+import eu.cointelligence.controller.users.exceptions.WrongPasswordException;
 import eu.cointelligence.model.User;
 
 /**
@@ -30,6 +28,8 @@ public class UserLoginServlet extends HttpServlet {
     
 	@EJB
     private IUserManager userManager;
+	
+	private AuditLog log;
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -52,6 +52,10 @@ public class UserLoginServlet extends HttpServlet {
 				e.printStackTrace();
 			}
     	}
+    	log = (AuditLog) this.getServletContext().getAttribute("auditLog");
+    	if (log == null) {
+    		System.out.println("AUDIT LOG NOT INITIALIZED!!");
+    	}
     }
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
@@ -68,41 +72,48 @@ public class UserLoginServlet extends HttpServlet {
 				.getParameter(Constants.USERNAME_REQUEST_PARAM_NAME);
 		String password = request
 				.getParameter(Constants.PASSWORD_REQUEST_PARAM_NAME);
+		
+		String message = null;
 
 		try {
 			if (username != null && password != null && username.length() > 0
 					&& password.length() > 0) {
-				User loginBean = userManager.login(username, password, UserRole.USER);
-
-				if (loginBean != null) {
-					// successful login
-					User userInfo = new User();
-					userInfo.setUserName(loginBean.getUserName());
-					userInfo.setFullName(loginBean.getFullName());
-					userInfo.setEmail(loginBean.getEmail());
-					
-					HttpSession session = request.getSession();
-					session.setAttribute(Constants.USER_INFO_SESSION_ATTR_NAME,
-							userInfo);
-					
-					response.addCookie(new Cookie("jsession", userInfo.getPasswordHash()));
-					response.sendRedirect(Constants.MAIN_PAGE);
-					return;
+				try {
+					User loginBean = userManager.login(username, password, UserRole.USER);
+	
+					if (loginBean != null) {
+						// successful login
+						User userInfo = new User();
+						userInfo.setUserName(loginBean.getUserName());
+						userInfo.setFullName(loginBean.getFullName());
+						userInfo.setEmail(loginBean.getEmail());
+						
+						HttpSession session = request.getSession();
+						session.setAttribute(Constants.USER_INFO_SESSION_ATTR_NAME,
+								userInfo);
+						
+//						response.addCookie(new Cookie("jsession", userInfo.getPasswordHash()));
+						this.log.log("login", username, true, request.getRemoteAddr());
+						response.sendRedirect(this.getServletContext().getContextPath() + Constants.MAIN_PAGE);
+						return;
+					}
+				} catch(WrongPasswordException e) {
+					this.log.log("login", username, false, request.getRemoteAddr(), "wrong password");
+					message = "Wrong username / password!";
+				} catch (NoSuchUserException e) {
+					this.log.log("login", username, false, request.getRemoteAddr(), "no such user");
+					message = "Wrong username / password!";
+				} catch (javax.resource.spi.SecurityException e) {
+					this.log.log("login", username, false, request.getRemoteAddr(), "role violation");
+					message = "You are not allowed to do this!";
 				}
 			}
 			
-			Locale requestLocale = request.getLocale();
-			ResourceBundle labels = ResourceBundle.getBundle("ResourceBundle",
-					requestLocale);
-
-			String message = labels
-					.getString("login.error.invalidCredentialsMsg");
+			//works for forwarding only
 			request.setAttribute(Constants.MESSAGE_REQUEST_ATTR_NAME, message);
 
-			request.getRequestDispatcher(Constants.LOGIN_PAGE).forward(request,
-					response);
+			response.sendRedirect(this.getServletContext().getContextPath() + Constants.LOGIN_PAGE);
 		} catch (Throwable e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			throw new RuntimeException("Unexpected error", e);
 		}
