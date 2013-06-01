@@ -227,7 +227,7 @@
     return this.each(function () {
       var $this = $(this)
         , data = $this.data('button')
-        , options = typeof option == 'object' && option
+        , options = typeof option == 'userect' && option
       if (!data) $this.data('button', (data = new Button(this, options)))
       if (option == 'toggle') data.toggle()
       else if (option) data.setState(option)
@@ -422,7 +422,7 @@
     return this.each(function () {
       var $this = $(this)
         , data = $this.data('carousel')
-        , options = $.extend({}, $.fn.carousel.defaults, typeof option == 'object' && option)
+        , options = $.extend({}, $.fn.carousel.defaults, typeof option == 'userect' && option)
         , action = typeof option == 'string' ? option : options.slide
       if (!data) $this.data('carousel', (data = new Carousel(this, options)))
       if (typeof option == 'number') data.to(option)
@@ -596,7 +596,7 @@
     return this.each(function () {
       var $this = $(this)
         , data = $this.data('collapse')
-        , options = $.extend({}, $.fn.collapse.defaults, $this.data(), typeof option == 'object' && option)
+        , options = $.extend({}, $.fn.collapse.defaults, $this.data(), typeof option == 'userect' && option)
       if (!data) $this.data('collapse', (data = new Collapse(this, options)))
       if (typeof option == 'string') data[option]()
     })
@@ -999,7 +999,7 @@
     return this.each(function () {
       var $this = $(this)
         , data = $this.data('modal')
-        , options = $.extend({}, $.fn.modal.defaults, $this.data(), typeof option == 'object' && option)
+        , options = $.extend({}, $.fn.modal.defaults, $this.data(), typeof option == 'userect' && option)
       if (!data) $this.data('modal', (data = new Modal(this, options)))
       if (typeof option == 'string') data[option]()
       else if (options.show) data.show()
@@ -1374,7 +1374,7 @@
     return this.each(function () {
       var $this = $(this)
         , data = $this.data('tooltip')
-        , options = typeof option == 'object' && option
+        , options = typeof option == 'userect' && option
       if (!data) $this.data('tooltip', (data = new Tooltip(this, options)))
       if (typeof option == 'string') data[option]()
     })
@@ -1493,7 +1493,7 @@
     return this.each(function () {
       var $this = $(this)
         , data = $this.data('popover')
-        , options = typeof option == 'object' && option
+        , options = typeof option == 'userect' && option
       if (!data) $this.data('popover', (data = new Popover(this, options)))
       if (typeof option == 'string') data[option]()
     })
@@ -1647,7 +1647,7 @@
     return this.each(function () {
       var $this = $(this)
         , data = $this.data('scrollspy')
-        , options = typeof option == 'object' && option
+        , options = typeof option == 'userect' && option
       if (!data) $this.data('scrollspy', (data = new ScrollSpy(this, options)))
       if (typeof option == 'string') data[option]()
     })
@@ -2121,7 +2121,7 @@
     return this.each(function () {
       var $this = $(this)
         , data = $this.data('typeahead')
-        , options = typeof option == 'object' && option
+        , options = typeof option == 'userect' && option
       if (!data) $this.data('typeahead', (data = new Typeahead(this, options)))
       if (typeof option == 'string') data[option]()
     })
@@ -2206,7 +2206,7 @@
       , reset = 'affix affix-top affix-bottom'
       , affix
 
-    if (typeof offset != 'object') offsetBottom = offsetTop = offset
+    if (typeof offset != 'userect') offsetBottom = offsetTop = offset
     if (typeof offsetTop == 'function') offsetTop = offset.top()
     if (typeof offsetBottom == 'function') offsetBottom = offset.bottom()
 
@@ -2233,7 +2233,7 @@
     return this.each(function () {
       var $this = $(this)
         , data = $this.data('affix')
-        , options = typeof option == 'object' && option
+        , options = typeof option == 'userect' && option
       if (!data) $this.data('affix', (data = new Affix(this, options)))
       if (typeof option == 'string') data[option]()
     })

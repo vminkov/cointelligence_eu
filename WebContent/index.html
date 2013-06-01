@@ -22,8 +22,7 @@
                 <ul id="mainUl" class="nav nav-tabs">
                     <li class="active"><a href="index.html">Начало</a></li>
                     <li><a href="#tablesPart">Въпроси</a></li>
-                    <li><a href="#">Профил</a></li>
-                    <li><a href="#">Портфолио</a></li>
+                    <li><a href="profile.html">Профил</a></li>
                     <li><a href="aboutUs.html">За нас</a></li>
                 </ul>
                 <div id="signButtons" class="btn-group">
@@ -97,7 +96,7 @@
                     </div>
                     <div class="modal-footer">
                         <button class="btn" data-dismiss="modal" aria-hidden="true">Затвори</button>
-                        <button class="btn btn-primary">Регистрирай се!</button>
+                        <button class="btn btn-primary regButton">Регистрирай се!</button>
                     </div>
                 </div>
                 <!-- modal sign ip -->
@@ -110,16 +109,16 @@
                     <div class="modal-body">
                         <form class="form-horizontal">
                             <div class="control-group">
-                                <label class="control-label" for="inputNickname">Псевдоним</label>
+                                <label class="control-label" for="nickname">Псевдоним</label>
                                 <div class="controls">
-                                    <input type="text" id="Text1" placeholder="nickname" />
+                                    <input type="text" id="nickname" placeholder="nickname" />
                                 </div>
                             </div>
 
                             <div class="control-group">
                                 <label class="control-label" for="pass">Парола</label>
                                 <div class="controls">
-                                    <input type="text" id="pass" placeholder="password" />
+                                    <input type="password" id="pass" placeholder="password" />
                                 </div>
                             </div>
                             <div class="control-group">
@@ -132,7 +131,7 @@
                     </div>
                     <div class="modal-footer">
                         <button class="btn" data-dismiss="modal" aria-hidden="true">Затвори</button>
-                        <button class="btn btn-primary">Влез!</button>
+                        <button class="btn btn-primary enterButton">Влез!</button>
                     </div>
                 </div>
             </nav>
@@ -177,7 +176,7 @@
                     </div>
                     <div class="modal-footer">
                         <button class="btn" data-dismiss="modal" aria-hidden="true">Затвори</button>
-                        <button class="btn btn-primary">Задай въпроса!</button>
+                        <button class="btn btn-primary" id="askQuestion">Задай въпроса!</button>
                     </div>
                 </div>
             </div>
@@ -212,7 +211,7 @@
                     </div>
                     <div class="modal-footer">
                         <button class="btn" data-dismiss="modal" aria-hidden="true">Затвори</button>
-                        <button class="btn btn-primary">Влез!</button>
+                        <button class="btn btn-primary" id="putIdea">Пусни идеята!</button>
                     </div>
                 </div>
             </div>
@@ -225,10 +224,10 @@
                 <h2 class="questionsSubHeader">Търгувай с тях и спечели точки за наградата!</h2>
                 <table id="statementsInfo">
                     <tr>
-                        <td class="statementDivs" id="tableNumber">Номер</td>
                         <td class="statementDivs" id="tableTitle">Заглавие</td>
                         <td class="statementDivs" id="tableDescription">Описание</td>
                         <td class="statementDivs" id="tablePrice">Цена</td>
+                        <td class="statementDivs" id="saleColumn">Търгувай</td>
 
                     </tr>
                 </table>
