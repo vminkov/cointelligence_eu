@@ -3,26 +3,23 @@
 <head>
     <title>Home</title>
     <meta charset="utf-8" />
-
+    <link href="styles/design.css" rel="stylesheet" />
     <link rel="stylesheet" href="styles/jquery.css" />
-    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-    <link href="styles/bootstrap.css" rel="stylesheet" />
     <link href="styles/bootstrap-responsive.css" rel="stylesheet" />
+    <link href="styles/bootstrap.css" rel="stylesheet" />
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
     <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
     <script src="scripts/widjest.js"></script>
-
     <script src="scripts/bootstrap.js"></script>
-    <link href="styles/design.css" rel="stylesheet" />
 </head>
 <body>
-    <p></p>
     <div id="wrapper">
         <header>
             <nav id="mainNav">
                 <ul id="mainUl" class="nav nav-tabs">
-                    <li class="active"><a href="index.html">Начало</a></li>
-                    <li><a href="#tablesPart">Въпроси</a></li>
-                    <li><a href="profile.html">Профил</a></li>
+                    <li><a href="index.html">Начало</a></li>
+                    <li><a href="index.html#tablesPart">Въпроси</a></li>
+                    <li class="active"><a href="profile.html">Профил</a></li>
                     <li><a href="aboutUs.html">За нас</a></li>
                 </ul>
                 <div id="signButtons" class="btn-group">
@@ -138,128 +135,39 @@
             <h1>
                 <img src="img/koki-logo.png" width="170" height="90" alt="koki-logo" id="logo" /></h1>
         </header>
+        <section>
+            <div id="profileWrapper">
+                <!--left part-->
+                
+                <div id="userInformation" class="span7">
+                    <h1 id="userInfoHeadline">Инфомация</h1>
+                    <div id="avatar" class="span2"></div>
+                    <div id="infoUser" class="span3"></div>
+                    <div id="winReward"><img src="img/sign.png"/></div>
+                </div>
 
-        <div id="qestionBaloons">
-            <div id="questionWrapper" class="span5">
+                <!--right part-->
+                <div id="portfolio" class="span7">
 
-                <a href="#modalQuestion" role="button" data-toggle="modal">
-                    <img src="img/question.png" width="400" /></a>
+                    <h1 id="portfolioHeadline">Портфолио на сделките</h1>
+                    <div id="beforeAccordion">
+                       
 
-                <div id="modalQuestion" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                        <h3 id="H2">Задай въпрос!</h3>
-                    </div>
-                    <div class="modal-body">
-                        <form class="form-horizontal">
-                            <div class="control-group">
-                                <label class="control-label" for="headline">Заглавие на въпроса</label>
-                                <div class="controls">
-                                    <input type="text" class="headlineQuestion" id="headline" placeholder="short headline" />
-                                </div>
-                            </div>
-
-                            <div class="control-group">
-                                <label class="control-label" for="description">Описание на въпроса</label>
-                                <div class="controls">
-                                    <textarea id="description" placeholder="description"></textarea>
-                                </div>
-                            </div>
-                            <div class="control-group">
-                                <label for="date" class="control-label">Дата на падеж</label>
-                                <div class="controls">
-
-                                    <input type="datetime-local" id="date" />
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button class="btn" data-dismiss="modal" aria-hidden="true">Затвори</button>
-                        <button class="btn btn-primary" id="askQuestion">Задай въпроса!</button>
                     </div>
                 </div>
             </div>
-
-
-
-            <div id="ideaWrapper" class="span5">
-                <a href="#modalIdea" role="button" data-toggle="modal">
-                    <img src="img/idea.png" width="400" /></a>
-
-                <div id="modalIdea" class="modal hide fade " tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                        <h3 id="H3">Пусни идея!</h3>
-                    </div>
-                    <div class="modal-body">
-                        <form class="form-horizontal">
-                            <div class="control-group">
-                                <label class="control-label" for="ideaHeadline">Заглавие на идеята</label>
-                                <div class="controls">
-                                    <input type="text" class="headlineQuestion" id="ideaHeadline" placeholder="short headline" />
-                                </div>
-                            </div>
-
-                            <div class="control-group">
-                                <label class="control-label" for="ideaDescription">Описание на идеята</label>
-                                <div class="controls">
-                                    <textarea id="ideaDescription" placeholder="idea description"></textarea>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button class="btn" data-dismiss="modal" aria-hidden="true">Затвори</button>
-                        <button class="btn btn-primary" id="putIdea">Пусни идеята!</button>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-        <!-- end of first section-->
-        <div id="tablesPart">
-            <div id="questionHeadline" class="span7">
-                <h1 class="questionsHeader">Bсички въпроси и идеи!</h1>
-                <h2 class="questionsSubHeader">Търгувай с тях и спечели точки за наградата!</h2>
-                <div class="scroller">
-                    <table id="statementsInfo">
-                        <tr id="questionTableHeadline">
-                            <td class="statementDivs" id="tableTitle">Заглавие</td>
-                            <td class="statementDivs" id="tableDescription">Описание</td>
-                            <td class="statementDivs" id="tablePrice">Цена</td>
-                            <td class="statementDivs" id="saleColumn">Търгувай</td>
-
-                        </tr>
-                    </table>
-                </div>
-            </div>
-            <div id="rankingHeadline" class="span4">
-                <h1 class="rankHeader">Kласацията на играчите!</h1>
-                <h2 class="rankSubHeader">Търгувай и може ти да бъдеш тук!</h2>
-                <div class="scroller" id="rankDiv">
-                    <table id="rankTable">
-                        <tr>
-                            <td class="statementDivs" id="userName">Username</td>
-                            <td class="statementDivs" id="cointels">Cointels</td>
-                        </tr>
-
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
-    <aside>
-    </aside>
-    <footer>
-        <!--<hr id="footerLine" width="100%" size="5px" color="grey" />-->
-        <p>
-            KOKI Company Copyright  ©  
-        </p>
-    </footer>
+    </section>
+        <footer>
+            <hr width="100%" size="5px" color="grey" />
+            <p>
+                KOKI Company Copyright  ©  
+            </p>
+        </footer>
     <script src="scripts/scripts.js"></script>
+    <script src="scripts/profileScripts.js"></script>
+    </div>
+
+
 </body>
 </html>
 
-
- <!--<td class="statementDivs" id="Money">Gained Money So Far</td>-->

@@ -1,6 +1,6 @@
 ﻿  function customJS() {
     var paths = {};
-    paths.stetements = 'http://localhost:8080/cointelligence_eu/rest/statements';
+    paths.stetements = 'testJSON/testStatements.js'; //'http://localhost:8080/cointelligence_eu/rest/statements';
     paths.users = 'testJSON/users.js';
 //    counter = 0;
 //    function nalqvo(){
@@ -15,7 +15,8 @@
 //    	index = (counterPages % 4) *7 + i;
 //    	obj = data[index];
 //    }
-    var test = $.getJSON(paths.stetements, function (data) {
+    var readQuestions = $.getJSON(paths.stetements, function (data) {
+        data.sortBy("currentValue");
         $.each(data, function (index, obj) {
             var row = $('<tr class="questionRow"/>');
             row.append("<td class='titleCol questionCol'> " + obj.title + "</td>");
@@ -55,24 +56,19 @@
                 var question = obj;
                 showPotentialWinAndLost(event, question);
             }
-            //var quontityFields = document.getElementsByClassName("quontityField");
-            //for (var i = 0; i < quontityFields.length; i++) {
-                
-            //    quontityFields[i].onchange = function () {
-            //        showPotentialWinAndLost(event);
-            //    };
-            //}
+
 
         });
     }).fail(function () {
         console.log("fail");
     });
 
-    var test = $.getJSON(paths.users, function (data) {
+    var readPlayersRanking = $.getJSON(paths.users, function (data) {
+        data.sortBy("cointels");
         $.each(data, function (index, obj) {
             var row = $('<tr class="questionRow"/>');
             row.append("<td class='nicknameCol questionCol'><i class='icon-user'></i>" + obj.userName + "</td>");
-            row.append("<td class='priceCol questionCol'>" + obj.account.cointels + "</td>");
+            row.append("<td class='priceCol questionCol'>" + obj.cointels + "</td>");
             $('#rankTable').append(row);
         });
     }).fail(function () {
@@ -272,8 +268,8 @@
                  "<div class='control-group'>" +
                 "<label class='control-label'>Възможна печалба и загуба:</label>" +
                 "<div class='controls'>" +
-                "<span style='margin-right:10px' class='btn btn-success optional-price" + obj.id + "'>" + 0 + " печалба" + "</span>" +
-                "<span class='btn btn-danger optional-price" + obj.id + "'>" + 0 + " загуба" + "</span></br></br>" +
+                "<span style='margin-right:10px' class='btn btn-success optional-price" + obj.id + "' id=win" + obj.id + ">" + 0 + " печалба" + "</span>" +
+                "<span class='btn btn-danger optional-price" + obj.id + "' id=loss" + obj.id + ">" + 0 + " загуба" + "</span></br></br>" +
                 "</div>" +
                 "</div>" +
                    "<div class='control-group'>" +
@@ -290,25 +286,21 @@
     }
 
     function usersTest(obj,event) {
-        var data = {};
         var dealForm = {};
-
-        dealForm.statementId = obj.id;
-        dealForm.title = obj.title;
-        dealForm.currentValue = obj.currentValue;
         var yesStatement = document.getElementById("yesStetement" + obj.id);
+        var noStatement = document.getElementById("noStetement" + obj.id);
+        var shortSellStatement = document.getElementById("shortSaleStetement" + obj.id);
+        dealForm.statementId = obj.id;
+        dealForm.currentValue = obj.currentValue;
+
+       
         if (yesStatement.checked==true) {
             var selected = yesStatement;
             var selectedInput = yesStatement.value;
-        }
-        var noStatement = document.getElementById("noStetement"+obj.id);
-        if (noStatement.checked == true) {
+        }else if (noStatement.checked == true) {
             var selected = noStatement;
             var selectedInput = noStatement.value;
-        }
-        
-        var shortSellStatement = document.getElementById("shortSale"+obj.id);
-        if (shortSellStatement.checked == true) {
+        } else if (shortSellStatement.checked == true) {
             var selected = shortSellStatement;
             var selectedInput = shortSellStatement.value;
         }
@@ -326,20 +318,21 @@
         }else{
             alert("Избери опция за да търгуваш с твърдението!")
         }
-        dealForm.username = userrmation.username;
+        //dealForm.username = userrmation.username; //TODO uncomment when comit js
         
-        dealForm.password = userrmation.password;
-        data.dealForm = JSON.stringify(dealForm);
+        //dealForm.password = userrmation.password; //TODO uncomment when comit js
+
         url = "http://localhost:8080/cointelligence_eu/rest/trader/"+selectedInput;
         $.ajax({
             "url": url,
             "type": "POST",
             "data": dealForm
         }).success(function (data) {
-            
+            deleteOldRows();
            customJS();
         });
     }
+
     function showStetementQuontity(event) {
         var stementsContainer = document.getElementsByClassName("selectQuontity");
         for (var i = 0; i < stementsContainer.length; i++) {
@@ -353,47 +346,71 @@
     }
 
     function showPotentialWinAndLost(event,question) {
+
+        
         var bittedValue = event.target.value;
         if (!parseFloat(bittedValue)) {
             return;
         }
-        else if(parseFloat(bittedValue)<1) {
+        else if (parseFloat(bittedValue) < 1) {
             return;
         }
+
         var allPrices = document.getElementsByClassName("optional-price");
         for (var i = 0; i < allPrices.length; i++) {
             allPrices[i].innerHTML = "0";
         }
-        //if we decide to make shortSale
-        //var yesValue = document.getElementById("yesQuontity" + question.id);
-        //var noValue = document.getElementById("noQuontity" + question.id);
-        //var shortSale = document.getElementById("shortSale" + question.id);
-        //if (yesValue) {
 
-        //}
-        //else if (noValue) {
-
-        //}
-        //else if (shortSale) {
-
-        //}
-        var optionalPrices = document.getElementsByClassName("optional-price" +question.id);
-        for (var i = 0; i < optionalPrices.length; i++) {
-            optionalPrices[i].innerHTML = (question.currentValue * parseFloat(bittedValue));
-            if (!event.target.value) {
-                optionalPrices[i].innerHTML = "0";
+        if (event.target.id == ("yesQuontity" + question.id) || event.target.id==("noQuontity" + question.id)) {
+            var potentialWinsAndLosses = document.getElementsByClassName("optional-price" + question.id);
+            for (var i = 0; i < potentialWinsAndLosses.length; i++) {
+                potentialWinsAndLosses[i].innerHTML = (question.currentValue * parseFloat(bittedValue));
+                if (!event.target.value) {
+                    potentialWinsAndLosses[i].innerHTML = "0";
+                }
             }
+
+        } else {//TODO:
+            var potentialWin = document.getElementById("win" + question.id);
+            potentialWin.innerHTML = "win";
+            var potentialLoss = document.getElementById("loss" + question.id);
+            potentialLoss.innerHTML = "loss";
         }
-        
     }
-	return 
-	{
-		reload:customJS
-	}
-    
+    function deleteOldRows() {
+        var questionsTable = document.getElementById("statementsInfo");
+        var questionRows = questionsTable.children[0].children;
+        var questionLength = questionRows.length;
+        for (var i = 0; i < questionLength - 1; i++) {
+            questionsTable.children[0].deleteRow();
+        }
+
+        var rankingTable = document.getElementById("rankTable");
+        var rankingRows = rankingTable.children[0].children;
+        var rankingLength = rankingRows.length;
+        for (var i = 0; i < rankingLength - 1; i++) {
+            rankingTable.children[0].deleteRow();
+        }
+    }
 
 };
-customJS();
+  customJS();
+
+//adding sortBy to the prototype of the array
+  function dynamicSort(property) {
+      var sortOrder = -1;
+      if (property[0] === "-") {
+          sortOrder = -1;
+          property = property.substr(1, property.length - 1);
+      }
+      return function (a, b) {
+          var result = (a[property] < b[property]) ? -1 : (a[property] > b[property]) ? 1 : 0;
+          return result * sortOrder;
+      }
+  }
+  Array.prototype.sortBy = function (property) {
+      return this.sort(dynamicSort(property))
+  }
 
 
 

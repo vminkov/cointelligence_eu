@@ -1,4 +1,15 @@
-﻿[{ "userName": "gosho-sexa", "account": {"money": 500,"cointels":200 } },
-{ "userName": "pesho", "account": { "money": 1000, "cointels": 900 } },
-{ "userName": "mustafa", "account": { "money": 300, "cointels": 200 } },
-{ "userName": "stamat", "account": { "money": 700, "cointels": 300 } }]
+﻿[   { "userName": "gosho-sexa", "cointels": 123 },
+    { "userName": "kiro", "cointels": 800 },
+    { "userName": "semo", "cointels": 900 },
+    { "userName": "strahil", "cointels": 1000 },
+    { "userName": "asencho", "cointels": 333 },
+    { "userName": "pavel", "cointels": 1 },
+    { "userName": "mitaka", "cointels": 3 },
+    { "userName": "gosho-sexa", "cointels": 123 },
+    { "userName": "kiro", "cointels": 800 },
+    { "userName": "semo", "cointels": 900 },
+    { "userName": "strahil", "cointels": 1000 },
+    { "userName": "asencho", "cointels": 333 },
+    { "userName": "pavel", "cointels": 1 },
+    { "userName": "mitaka", "cointels": 3 }]
+
