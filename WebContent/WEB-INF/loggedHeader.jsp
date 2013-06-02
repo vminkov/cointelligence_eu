@@ -23,7 +23,7 @@
 			<li><a href="#">Портфолио</a></li>
 			<li><a href="#">За нас</a></li>
 		</ul>
-		<form action="<%=Constants.LOGOUT_PAGE%>">
+		<form action="<%=request.getContextPath() + Constants.LOGOUT_PAGE%>">
 			<input type="submit" class="btn btn-primary" value="Изход" />
 		</form>
 	</nav>

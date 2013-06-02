@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.resource.spi.SecurityException;
 
+import eu.cointelligence.controller.users.exceptions.NoSuchUserException;
 import eu.cointelligence.controller.users.exceptions.UserCreationException;
 import eu.cointelligence.controller.users.exceptions.UserExistsException;
 import eu.cointelligence.controller.users.exceptions.WrongPasswordException;
@@ -119,7 +120,7 @@ public interface IUserManager {
      */
     User updateUserInfo(User user);
 
-	User loginWithCookie(String username, byte[] passwordHash,
+	User loginWithCookie(String username, String passwordHash,
 			UserRole loginType) throws WrongPasswordException, SecurityException, NoSuchUserException;
 
 	List<User> getAllUsers();

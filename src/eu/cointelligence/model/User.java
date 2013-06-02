@@ -5,9 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
-import eu.cointelligence.controller.entity.beans.Gender;
+import eu.cointelligence.controller.entity.Gender;
 import eu.cointelligence.controller.users.UserRole;
 
 @Entity
@@ -24,8 +23,6 @@ public class User {
 	@Basic
 	private String email;
 	@Basic
-	private String password;
-	@Basic
 	private String roleString;
 	@Basic
 	private int age;
@@ -33,6 +30,8 @@ public class User {
 	private String genderString;
 	@Basic 
 	private String department;
+	@OneToOne
+	private Account account;
 		
 	public int getAge() {
 		return age;
@@ -58,9 +57,6 @@ public class User {
 		this.department = department;
 	}
 
-	@OneToOne
-	private Account account;
-
 	public void setFullName(String param) {
 		this.fullName = param;
 	}
@@ -83,14 +79,6 @@ public class User {
 	
 	public String getPasswordHash() {
 		return passwordHash;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
 	}
 
 	public void setRole(UserRole param) {

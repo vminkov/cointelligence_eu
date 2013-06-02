@@ -4,6 +4,7 @@ import java.io.UnsupportedEncodingException;
 import java.security.InvalidParameterException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -14,10 +15,12 @@ import javax.resource.spi.SecurityException;
 import eu.cointelligence.controller.Constants;
 import eu.cointelligence.controller.dao.AccountsDao;
 import eu.cointelligence.controller.dao.UsersDao;
+import eu.cointelligence.controller.users.exceptions.NoSuchUserException;
 import eu.cointelligence.controller.users.exceptions.UserCreationException;
 import eu.cointelligence.controller.users.exceptions.UserExistsException;
 import eu.cointelligence.controller.users.exceptions.WrongPasswordException;
 import eu.cointelligence.model.Account;
+import eu.cointelligence.model.StatementStake;
 import eu.cointelligence.model.User;
 
 @Singleton
@@ -27,7 +30,7 @@ public class UserManagerImpl implements IUserManager {
 	private UsersDao usersDao;
 	@EJB
 	private AccountsDao accountsDao;
-	
+
 	@Override
 	public void removeUser(String username, String comment) {
 		// TODO Auto-generated method stub
@@ -36,7 +39,8 @@ public class UserManagerImpl implements IUserManager {
 
 	@Override
 	public User login(String username, String password, UserRole loginType)
-			throws SecurityException, WrongPasswordException, NoSuchUserException {
+			throws SecurityException, WrongPasswordException,
+			NoSuchUserException {
 		if (username == null || password == null)
 			throw new InvalidParameterException("username: " + username
 					+ " password: " + password + " are not valid");
@@ -44,36 +48,39 @@ public class UserManagerImpl implements IUserManager {
 		final String userSearch = username.toLowerCase();
 
 		User user = this.usersDao.find(userSearch);
-		if(user == null) {
+		if (user == null) {
 			throw new NoSuchUserException();
 		}
-		
+
 		UserRole role = user.getRole();
-		//TODO: smarter check according to the hierarchy
+		// TODO: smarter check according to the hierarchy
 		if (role == null || !role.equals(loginType)) {
 			throw new SecurityException();
 		}
-
-		if (!user.getPassword().equals(password)) {
-			throw new WrongPasswordException();
-		} else {
-			return user;
+		boolean validPass = false;
+		try {
+			validPass = user.getPasswordHash().equals(getMD5Hash(password));
+		} catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
+			throw new SecurityException(e);
 		}
+		if (!validPass) {
+			throw new WrongPasswordException();
+		}
+		return user;
 	}
 
 	@Override
-	public User loginWithCookie(String username, byte[] passwordHash,
+	public User loginWithCookie(String username, String passwordHash,
 			UserRole loginType) throws WrongPasswordException,
 			SecurityException, NoSuchUserException {
-		if (username == null || passwordHash == null
-				|| passwordHash.length == 0)
+		if (username == null || passwordHash == null)
 			throw new InvalidParameterException("username: " + username
 					+ " password: " + passwordHash + " are not valid");
 
 		final String userSearch = username.toLowerCase();
 
 		User user = this.usersDao.find(userSearch);
-		if(user == null){
+		if (user == null) {
 			throw new NoSuchUserException();
 		}
 		if (!user.getRole().equals(loginType)) {
@@ -101,15 +108,13 @@ public class UserManagerImpl implements IUserManager {
 			if (user != null) {
 				System.out.println("found the user " + user.getUserName());
 				// XXX revise this later
-				if (user.getPassword() == null) {
+				if (user.getPasswordHash() == null) {
 					// this.entityManager.persist(user);
 
 					user.setPasswordHash(getMD5Hash(password));
-					user.setPassword(password);
 
 					System.out.println("setting new pass for user "
-							+ user.getUserName() + "\n pass is "
-							+ user.getPassword());
+							+ user.getUserName() + "\n pass is " + password);
 				} else {
 					System.out.println("the user: " + username
 							+ " already exist");
@@ -122,18 +127,17 @@ public class UserManagerImpl implements IUserManager {
 
 				user.setPasswordHash(getMD5Hash(password));
 
-				user.setPassword(password);
 				user.setRole(UserRole.USER);
 				// user.removed = Boolean.valueOf(false);
 				// user.confirmed = Boolean.valueOf(true);
 				Account newAccount = accountsDao.create(new Account());
-				
+
 				newAccount.setCointels(Constants.DEFAULT_COINTELS);
-				newAccount.setStatementsInPossession(new HashMap<Long, Long>());
-				
+				newAccount.setStatementsStakes(new ArrayList<StatementStake>());
+
 				user.setAccount(newAccount);
 				System.out.println("creating user " + user.getUserName()
-						+ " with pass " + user.getPassword());
+						+ " with pass " + password);
 			}
 
 			this.usersDao.update(user);
@@ -192,6 +196,8 @@ public class UserManagerImpl implements IUserManager {
 		final String userSearch = username.toLowerCase();
 
 		User user = this.usersDao.find(userSearch);
+		if (user == null)
+			return false;
 
 		return user.getRole().equals(UserRole.USER);
 	}
@@ -210,20 +216,25 @@ public class UserManagerImpl implements IUserManager {
 
 	@Override
 	public User updateUserInfo(User user) {
-		// do not update the password from here
-		if (user.getPassword() != null)
-			return null;
-		
+		// // do not update the password from here
+		// if (user.getPassword() != null)
+		// return null;
+
 		User result = this.usersDao.find(user.getUserName());
 		User merged = this.usersDao.update(result);
-				
+
 		merged.setAge(user.getAge());
-		merged.setDepartment(user.getDepartment());
-		merged.setEmail(user.getEmail());
-		merged.setFullName(user.getFullName());
-		merged.setGender(user.getGender());
-		merged.setRole(user.getRole());
-		
+		if (user.getDepartment() != null)
+			merged.setDepartment(user.getDepartment());
+		if (user.getEmail() != null)
+			merged.setEmail(user.getEmail());
+		if (user.getFullName() != null)
+			merged.setFullName(user.getFullName());
+		if (user.getGender() != null)
+			merged.setGender(user.getGender());
+		if (user.getRole() != null)
+			merged.setRole(user.getRole());
+
 		return user;
 	}
 
@@ -241,7 +252,7 @@ public class UserManagerImpl implements IUserManager {
 				hexString.append('0');
 			hexString.append(hex);
 		}
-		
+
 		return hexString.toString();
 	}
 

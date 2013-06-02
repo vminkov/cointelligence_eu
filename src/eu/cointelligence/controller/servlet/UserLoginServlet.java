@@ -10,10 +10,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import eu.cointelligence.controller.Constants;
+import eu.cointelligence.controller.entity.Gender;
 import eu.cointelligence.controller.log.AuditLog;
 import eu.cointelligence.controller.users.IUserManager;
-import eu.cointelligence.controller.users.NoSuchUserException;
 import eu.cointelligence.controller.users.UserRole;
+import eu.cointelligence.controller.users.exceptions.NoSuchUserException;
 import eu.cointelligence.controller.users.exceptions.UserCreationException;
 import eu.cointelligence.controller.users.exceptions.UserExistsException;
 import eu.cointelligence.controller.users.exceptions.WrongPasswordException;
@@ -40,12 +41,26 @@ public class UserLoginServlet extends HttpServlet {
     @Override
     public void init() throws ServletException {
     	super.init();
+		String isReleaseStr = this.getInitParameter(Constants.RELEASE_INIT_PARAM);
+		boolean isRelease = ! "false".equals(isReleaseStr);
+		
+		if(!isRelease){
+			//nothing - we always want to have an admin
+		}
     	if(userManager.getAllUsers().size() == 0) {
     		try {
-    			System.out.println("Created ADMIN account with user/pass: " + "admin / kokikoki");
-				userManager.createNewUser("admin", "kokikoki");
-			} catch (UserExistsException e) {
+				User admin = userManager.createNewUser("admin", "kokikoki");
+				admin.setAge(21);
+				admin.setDepartment("admins");
+				admin.setEmail("noreply@cointelligence.eu");
+				admin.setFullName("badmin");
+				admin.setGender(Gender.MALE);
+				userManager.updateUserInfo(admin);
+				
+				System.out.println("Created ADMIN account with user/pass: " + "admin / kokikoki");
+
 				System.out.println("This could never happen");
+    		} catch (UserExistsException e) {
 				e.printStackTrace();
 			} catch (UserCreationException e) {
 				System.out.println("that's bad - there is no admin account - create one from the database");
@@ -87,6 +102,7 @@ public class UserLoginServlet extends HttpServlet {
 						userInfo.setUserName(loginBean.getUserName());
 						userInfo.setFullName(loginBean.getFullName());
 						userInfo.setEmail(loginBean.getEmail());
+						userInfo.setPasswordHash(loginBean.getPasswordHash());
 						
 						HttpSession session = request.getSession();
 						session.setAttribute(Constants.USER_INFO_SESSION_ATTR_NAME,
@@ -94,7 +110,7 @@ public class UserLoginServlet extends HttpServlet {
 						
 //						response.addCookie(new Cookie("jsession", userInfo.getPasswordHash()));
 						this.log.log("login", username, true, request.getRemoteAddr());
-						response.sendRedirect(this.getServletContext().getContextPath() + Constants.MAIN_PAGE);
+						response.sendRedirect(request.getContextPath() + Constants.MAIN_PAGE);
 						return;
 					}
 				} catch(WrongPasswordException e) {

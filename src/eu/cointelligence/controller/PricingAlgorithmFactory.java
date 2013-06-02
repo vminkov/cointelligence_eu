@@ -4,7 +4,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import eu.cointelligence.controller.entity.beans.TradingAction;
+import eu.cointelligence.controller.entity.TradingAction;
 import eu.cointelligence.model.Statement;
 import eu.cointelligence.model.Transaction;
 

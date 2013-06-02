@@ -30,8 +30,6 @@
 <body>
 	<div id="wrapper">
 
-		<!-- ЗА ДА ВЛЕЗЕШ В МЕНИДЖЪРСКИЯ ПАНЕЛ НАТИСНИ ГОРЕ "МЕНИДЖЪР" -->
-		<!-- ЗА ДА ВЛЕЗЕШ В СЛУЖИТЕЛСКИЯ ПАНЕЛ НАТИСНИ ГОРЕ "СЛУЖИТЕЛ" -->
 		<div id="tablesPart">
 			<!--  insert statements table -->
 			<%@include file="WEB-INF/statementsTable.jsp"%>

@@ -49,7 +49,12 @@
 		<init-param>
 			<description></description>
 			<param-name>exclude-uri-regex</param-name>
-			<param-value>((^/(.+)/login.jsp$)|(^/(.+)/userLogin$)|(^/(.+)/index.jsp$)|(^/(.+)/styles(/(.+)$))|(^/(.+)/scripts(/(.+))$)|(^/(.+)/img(/(.+)$))) </param-value>
+			<param-value>((^/(.+)/login.jsp$)|(^/(.+)/userLogin$)|(^/(.+)/styles(/(.+)$))|(^/(.+)/scripts(/(.+))$)|(^/(.+)/img(/(.+)$))) </param-value>
+		</init-param>
+		<init-param>
+			<description></description>
+			<param-name>release</param-name>
+			<param-value>false</param-value>
 		</init-param>
 	</filter>
 	<filter-mapping>

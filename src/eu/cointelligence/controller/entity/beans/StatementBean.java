@@ -13,6 +13,7 @@ public class StatementBean implements Serializable{
 	private String description;
 	private Boolean voteStarted;
 	private Long currentValue;
+	private Long id;
 	
 	public String getTitle() {
 		return title;
@@ -51,5 +52,11 @@ public class StatementBean implements Serializable{
 			e.printStackTrace();
 		}
 		return statement;
+	}
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
 	}
 }

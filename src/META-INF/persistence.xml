@@ -8,6 +8,9 @@
 		<class>eu.cointelligence.model.Transaction</class>
 		<class>eu.cointelligence.model.Statement</class>
 		<class>eu.cointelligence.model.Account</class>
+		<class>eu.cointelligence.model.Idea</class>
+		<class>eu.cointelligence.model.ShortSell</class>
+		<class>eu.cointelligence.model.StatementStake</class>
 		<properties>
             <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver"/>
 <!-- 			<property name="javax.persistence.jdbc.url" -->

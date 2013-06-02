@@ -16,4 +16,8 @@ public class Constants {
 	public static final String INVALID_AUTHENTICATION_PAGE = "/loginfail.jsp";
 	
 	public static final String AUTHENTICATION_FILTER_EXCLUDE_URI_REGEX_PARAM_NAME = "exclude-uri-regex";
+
+	public static final String RELEASE_INIT_PARAM = "release";
+
+	public static final Long MAX_PRICE_FOR_A_STATMENT = new Long(100);
 }

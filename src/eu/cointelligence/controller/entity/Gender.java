@@ -1,4 +1,4 @@
-package eu.cointelligence.controller.entity.beans;
+package eu.cointelligence.controller.entity;
 
 public enum Gender {
 	MALE("MALE"),
@@ -19,8 +19,7 @@ public enum Gender {
 				}
 			}
 		}
-
-		throw new IllegalArgumentException("Invalid Gender: " + value);
+		return OTHER;
 	}
 
 	public String toValue() {

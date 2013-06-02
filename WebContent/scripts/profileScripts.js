@@ -3,7 +3,7 @@
     var user = $.getJSON(path, function (data) {
         $.each(data,function(index,user){
 
-        }
+        });
         $.each(data, function (index, user) {
             var row = $('<tr class="questionRow"/>');
             row.append("<td class='idCol questionCol'>" + user.id + "</td>");

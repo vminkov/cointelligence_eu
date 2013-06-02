@@ -13,7 +13,7 @@ import com.google.gson.JsonParseException;
 import eu.cointelligence.controller.users.UserRole;
 
 @Entity
-@Table(name = "T_STATEMENT")
+@Table(name = "t_statement")
 public class Statement {
 	// private static transient Gson gson = new Gson(); ?
 	@Basic
@@ -24,7 +24,7 @@ public class Statement {
 	private String ownersGroup;
 	@Basic
 	private Boolean voteStarted;
-	@Basic
+	@Basic 
 	private Long currentValue;
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)

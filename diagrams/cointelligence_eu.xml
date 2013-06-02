@@ -1,10 +1,32 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?><entities>
 	<entity>
+		<entity-name>eu.cointelligence.model.Idea</entity-name>
+		<entity-width>120</entity-width>
+		<entity-height>186</entity-height>
+		<entity-X-Coordinate>180</entity-X-Coordinate>
+		<entity-Y-Coordinate>42</entity-Y-Coordinate>
+		<primary-collapsed>false</primary-collapsed>
+		<relation-collapsed>false</relation-collapsed>
+		<basic-collapsed>false</basic-collapsed>
+	</entity>
+
+	<entity>
+		<entity-name>eu.cointelligence.model.ShortSell</entity-name>
+		<entity-width>120</entity-width>
+		<entity-height>146</entity-height>
+		<entity-X-Coordinate>518</entity-X-Coordinate>
+		<entity-Y-Coordinate>358</entity-Y-Coordinate>
+		<primary-collapsed>false</primary-collapsed>
+		<relation-collapsed>false</relation-collapsed>
+		<basic-collapsed>false</basic-collapsed>
+	</entity>
+
+	<entity>
 		<entity-name>eu.cointelligence.model.Transaction</entity-name>
 		<entity-width>120</entity-width>
 		<entity-height>246</entity-height>
-		<entity-X-Coordinate>220</entity-X-Coordinate>
-		<entity-Y-Coordinate>61</entity-Y-Coordinate>
+		<entity-X-Coordinate>444</entity-X-Coordinate>
+		<entity-Y-Coordinate>28</entity-Y-Coordinate>
 		<primary-collapsed>false</primary-collapsed>
 		<relation-collapsed>false</relation-collapsed>
 		<basic-collapsed>false</basic-collapsed>
@@ -13,9 +35,9 @@
 	<entity>
 		<entity-name>eu.cointelligence.model.Statement</entity-name>
 		<entity-width>120</entity-width>
-		<entity-height>168</entity-height>
-		<entity-X-Coordinate>460</entity-X-Coordinate>
-		<entity-Y-Coordinate>85</entity-Y-Coordinate>
+		<entity-height>188</entity-height>
+		<entity-X-Coordinate>700</entity-X-Coordinate>
+		<entity-Y-Coordinate>152</entity-Y-Coordinate>
 		<primary-collapsed>false</primary-collapsed>
 		<relation-collapsed>false</relation-collapsed>
 		<basic-collapsed>false</basic-collapsed>
@@ -24,9 +46,9 @@
 	<entity>
 		<entity-name>eu.cointelligence.model.User</entity-name>
 		<entity-width>120</entity-width>
-		<entity-height>286</entity-height>
-		<entity-X-Coordinate>610</entity-X-Coordinate>
-		<entity-Y-Coordinate>220</entity-Y-Coordinate>
+		<entity-height>266</entity-height>
+		<entity-X-Coordinate>20</entity-X-Coordinate>
+		<entity-Y-Coordinate>167</entity-Y-Coordinate>
 		<primary-collapsed>false</primary-collapsed>
 		<relation-collapsed>false</relation-collapsed>
 		<basic-collapsed>false</basic-collapsed>
@@ -35,9 +57,20 @@
 	<entity>
 		<entity-name>eu.cointelligence.model.Account</entity-name>
 		<entity-width>120</entity-width>
-		<entity-height>128</entity-height>
-		<entity-X-Coordinate>48</entity-X-Coordinate>
-		<entity-Y-Coordinate>320</entity-Y-Coordinate>
+		<entity-height>226</entity-height>
+		<entity-X-Coordinate>243</entity-X-Coordinate>
+		<entity-Y-Coordinate>318</entity-Y-Coordinate>
+		<primary-collapsed>false</primary-collapsed>
+		<relation-collapsed>false</relation-collapsed>
+		<basic-collapsed>false</basic-collapsed>
+	</entity>
+
+	<entity>
+		<entity-name>eu.cointelligence.model.StatementStake</entity-name>
+		<entity-width>120</entity-width>
+		<entity-height>146</entity-height>
+		<entity-X-Coordinate>740</entity-X-Coordinate>
+		<entity-Y-Coordinate>416</entity-Y-Coordinate>
 		<primary-collapsed>false</primary-collapsed>
 		<relation-collapsed>false</relation-collapsed>
 		<basic-collapsed>false</basic-collapsed>

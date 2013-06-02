@@ -1,25 +1,20 @@
 package eu.cointelligence.model;
 
-import java.util.UUID;
-
 import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-
-import eu.cointelligence.model.Statement;
 
 @Entity
 @Table(name = "T_TRANSACTION")
 public class Transaction {
 
-	@OneToOne
-	private Account account;
 	@Basic
 	private long amount;
 	@Basic
-	private Long priceAtTrade;
+	private long priceAtTrade;
 	@Basic
 	private String state;
 	@Basic
@@ -28,8 +23,11 @@ public class Transaction {
 	private Statement statement;
 	@Basic
 	private Boolean checkedByMarketMaker;
+	@ManyToOne
+	private Account account;
 	@Id
-	private String id;
+//    @GeneratedValue(strategy=GenerationType.IDENTITY)
+	private Long id;
 
 	public Transaction() {
 	}
@@ -38,20 +36,9 @@ public class Transaction {
 			Long amount) {
 		setAccount(account);
 		setStatement(statement);
+		setPriceAtTrade(statement.getCurrentValue());
 		setOrderType(orderType);
 		setAmount(amount);
-
-		// XXX: awful and ugly... and I am not sure if it's unique actually
-		// UPDATE: now it's a bit better
-		setId(UUID.randomUUID().toString());
-	}
-
-	public Account getAccount() {
-		return account;
-	}
-
-	public void setAccount(Account param) {
-		this.account = param;
 	}
 
 	public void setAmount(long param) {
@@ -102,11 +89,19 @@ public class Transaction {
 		return checkedByMarketMaker;
 	}
 
-	public void setId(String param) {
+	public Account getAccount() {
+		return account;
+	}
+
+	public void setAccount(Account param) {
+		this.account = param;
+	}
+
+	public void setId(Long param) {
 		this.id = param;
 	}
 
-	public String getId() {
+	public Long getId() {
 		return id;
 	}
 }

@@ -12,7 +12,8 @@ import eu.cointelligence.model.Account;
 @Path("/trader")
 public class TraderService {
 	@EJB
-	private Trader trader;
+	private ITrader trader;
+
 	@POST
 	@Path("/buy")
 	@Produces("application/json")
@@ -20,7 +21,7 @@ public class TraderService {
 			@FormParam("password") String password,
 			@FormParam("statementId") Long statementId,
 			@FormParam("quantity") Long wantedQuantity) {
-		
+
 		return trader.buy(username, password, statementId, wantedQuantity);
 	}
 
@@ -41,16 +42,19 @@ public class TraderService {
 	public boolean shortSell(@FormParam("username") String username,
 			@FormParam("password") String password,
 			@FormParam("statementId") Long statementId,
-			@FormParam("quantity") Long quantity) {
-		
-		//TODO
+			@FormParam("quantity") Long quantity,
+			@FormParam("timeout") Long minutes) {
+
+		// TODO
+		this.trader.shortSell(username, password, statementId, quantity, minutes);
 		return false;
 	}
 
 	@POST
 	@Path("/check")
 	@Produces("application/json")
-	public Account checkBankAccount(@FormParam("username") String username, @FormParam("passwordHash") String passwordHash) {
+	public Account checkBankAccount(@FormParam("username") String username,
+			@FormParam("passwordHash") String passwordHash) {
 		return trader.checkBankAccount(username, passwordHash);
 	}
 }

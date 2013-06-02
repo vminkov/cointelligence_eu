@@ -64,8 +64,12 @@ public abstract class GenericDaoImpl<T> implements GenericDao<T> {
 		Query q = em.createQuery("SELECT t from " + type.getName() + " as t");
 		
 		
-		return (List<T>) q.getResultList();
-
+		List<T> resultList = (List<T>) q.getResultList();
+		for(T t : resultList){
+			this.em.detach(t);
+		}
+		
+		return resultList;
     }
     
     @Override

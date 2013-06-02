@@ -22,12 +22,12 @@ import eu.cointelligence.model.Statement;
 public class StatementsService {
 
 	@EJB
-	private StatementsDao dao;
+	private ITrader trader;
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<StatementBean> getStatements() {
-		List<Statement> statements = dao.getStatements();
+		List<Statement> statements = this.trader.getStatements();
 		List<StatementBean> beans = new ArrayList<StatementBean>();
 
 		for (Statement statement : statements) {
@@ -43,8 +43,11 @@ public class StatementsService {
 	@Path("/{stId}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public StatementBean getStatement(@PathParam("stId") Long statementId) {
-		Statement statement = dao.find(statementId);
-		StatementBean bean = constructBeanFromEntity(statement);
+		Statement statement = this.trader.getStatementById(statementId);
+		StatementBean bean = null;
+		if(statement != null){
+			bean = constructBeanFromEntity(statement);
+		}
 		
 		return bean;
 	}
@@ -56,7 +59,7 @@ public class StatementsService {
 			@FormParam("password") String password,
 			@FormParam("newStatement") StatementBean statement) {
 		if (statement != null) {
-
+			//this.trader.submitQuestion();
 			// if (user is not manager)
 			// set voteStarted to false
 			// current price to default
@@ -75,6 +78,7 @@ public class StatementsService {
 		bean.setDescription(entity.getDescription());
 		bean.setTitle(entity.getTitle());
 		bean.setVoteStarted(entity.getVoteStarted());
+		bean.setId(entity.getId());
 
 		return bean;
 	}

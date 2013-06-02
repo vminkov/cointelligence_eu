@@ -1,22 +1,25 @@
 package eu.cointelligence.controller;
 
+import java.util.List;
+
 import javax.ejb.EJB;
 import javax.ejb.Singleton;
 import javax.resource.spi.SecurityException;
 
 import eu.cointelligence.controller.dao.StatementsDao;
-import eu.cointelligence.controller.entity.beans.TradingAction;
+import eu.cointelligence.controller.entity.TradingAction;
 import eu.cointelligence.controller.users.IUserManager;
-import eu.cointelligence.controller.users.NoSuchUserException;
 import eu.cointelligence.controller.users.UserRole;
+import eu.cointelligence.controller.users.exceptions.NoSuchUserException;
 import eu.cointelligence.controller.users.exceptions.WrongPasswordException;
 import eu.cointelligence.model.Account;
+import eu.cointelligence.model.ShortSell;
 import eu.cointelligence.model.Statement;
 import eu.cointelligence.model.Transaction;
 import eu.cointelligence.model.User;
 
 @Singleton
-public class Trader implements ITraderService {
+public class Trader implements ITrader {
 
 	@EJB
 	private IUserManager userManager;
@@ -37,6 +40,9 @@ public class Trader implements ITraderService {
 		}
 
 		Statement statement = statementsDao.find(statementId);
+		if(statement == null) 
+			return false;
+		
 		Long statementPrice = statement.getCurrentValue();
 		Account account = user.getAccount();
 		Long availableCash = account.getCointels();
@@ -46,7 +52,7 @@ public class Trader implements ITraderService {
 		}
 
 		// do the action
-		Long currentOwnedQuantity = account.getStatementsInPossession().get(
+		Long currentOwnedQuantity = account.getSharesForStatement(
 				statement.getId());
 		Long newOwnedQuantity;
 		if (currentOwnedQuantity == null) {
@@ -54,8 +60,7 @@ public class Trader implements ITraderService {
 		} else {
 			newOwnedQuantity = currentOwnedQuantity + wantedQuantity;
 		}
-		account.getStatementsInPossession().put(statement.getId(),
-				newOwnedQuantity);
+		account.updateStatementStake(statement, newOwnedQuantity);
 		account.setCointels(availableCash - (statementPrice * wantedQuantity));
 		userManager.updateUserInfo(user);
 		// TODO: make it a database transaction
@@ -71,7 +76,9 @@ public class Trader implements ITraderService {
 			return false;
 		}
 		Statement statement = statementsDao.find(statementId);
-
+		if(statement == null) 
+			return false;
+		
 		Long statementPrice = statement.getCurrentValue();
 
 		Account account = user.getAccount();
@@ -112,15 +119,80 @@ public class Trader implements ITraderService {
 
 		return account;
 	}
+	
+	@Override
+	public boolean shortSell(String username, String password, Long statementId,
+			Long quantity, Long minutes) {
+		
+		User user = authenticateUser(username, password);
+		if (user == null || quantity == null) {
+			return false;
+		}
+		
+		Statement statement = statementsDao.find(statementId);
+		if(statement == null) 
+			return false;
+		
+		Long statementPrice = statement.getCurrentValue();
+		if ((statementPrice == null)){
+			return false;
+		}
+
+		Account account = user.getAccount();
+		Long cointels = account.getCointels();
+		
+		//if the user does not have enough to buy them later at highest price
+		if(cointels < quantity * Constants.MAX_PRICE_FOR_A_STATMENT) {
+			return false;
+		}
+		
+		//no problems to proceed to transaction then
+//		Long ownedQuantity = account.getShortSellsCountForStatement(
+//				statement.getId());
+//
+//		Long newOwnedQuantity;
+//		if(ownedQuantity == null){
+//			newOwnedQuantity = quantity;
+//		} else {
+//			newOwnedQuantity = ownedQuantity  + quantity;
+//		}
+		
+		// do the action
+		ShortSell sell = new ShortSell();
+		Transaction transaction = new Transaction(user.getAccount(), statement,
+				TradingAction.SHORTSELL.toString(), quantity);
+		sell.setAmount(quantity);
+		sell.setTransaction(transaction);
+
+		account.getShortSells().add(sell);
+
+		account.setCointels(account.getCointels() - (quantity * Constants.MAX_PRICE_FOR_A_STATMENT));
+		userManager.updateUserInfo(user);
+
+		marketMaker.addLog(transaction);
+		return true;
+	}
 
 	private User authenticateUser(String username, String password) {
 		User user = null;
 		try {
-			user = this.userManager.login(username, password, UserRole.USER);
+			user = this.userManager.loginWithCookie(username, password, UserRole.USER);
 		} catch (NoSuchUserException | WrongPasswordException
 				| SecurityException e) {
 			// nothing
 		}
 		return user;
 	}
+
+	@Override
+	public List<Statement> getStatements() {
+		return this.statementsDao.getAll();
+	}
+
+	@Override
+	public Statement getStatementById(Long statementId) {
+		return this.statementsDao.find(statementId);
+	}
+	
+	
 }

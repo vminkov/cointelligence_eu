@@ -3,6 +3,8 @@ package eu.cointelligence.controller.entity.beans;
 import com.google.gson.Gson;
 import com.google.gson.JsonParseException;
 
+import eu.cointelligence.controller.entity.Gender;
+
 public class RegisterForm {
 	private static Gson gson = new Gson();
 	
