@@ -57,6 +57,11 @@ table {
     top:0.5%;
     left:45%;
 }
+#logout{
+    position:absolute;
+    top:0.5%;
+    left:95%;
+}
 #signButtons{
     position:absolute;
     top:2%;

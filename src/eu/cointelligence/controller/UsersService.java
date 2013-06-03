@@ -93,7 +93,7 @@ public class UsersService {
 		try {
 			return this.userManager.isUser(username);
 		} catch (InvalidParameterException e) {
-			//nothing
+			// nothing
 		}
 		return false;
 	}
@@ -103,36 +103,40 @@ public class UsersService {
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<UserRanking> getUsers() {
 		List<UserRanking> rankings = new ArrayList<UserRanking>();
-		for(User user :  this.userManager.getAllUsers()){
+		for (User user : this.userManager.getAllUsers()) {
 			UserRanking ranking = new UserRanking();
 			ranking.setCointels(user.getAccount().getCointels());
 			ranking.setFullname(user.getFullName());
-			//TODO!
+			// TODO!
 			ranking.setShortSellsInPossession(null);
-			
-			ranking.setStatementsInPossession(user.getAccount().getStatementsInPossession());
-			//TODO: calculate
-			ranking.setTotal(null);
-			
+
+			ranking.setStatementsInPossession(user.getAccount()
+					.getStatementsInPossession());
+
+			ranking.setTotal(user.getAccount().getTotalWealth());
+
 			ranking.setUsername(user.getUserName());
+
+			rankings.add(ranking);
 		}
 		return rankings;
 	}
-	
+
 	@POST
 	@Path("/portfolio")
 	@Produces(MediaType.APPLICATION_JSON)
-	public UserPortfolioBean getPersonalInfo(@FormParam("username") String username,
-			@FormParam("password") String password){
-		if(username == null || password == null){
+	public UserPortfolioBean getPersonalInfo(
+			@FormParam("username") String username,
+			@FormParam("password") String password) {
+		if (username == null || password == null) {
 			return null;
 		}
-		
+
 		User thisUser = this.userManager.getUser(username, password);
-		if(thisUser == null){
+		if (thisUser == null) {
 			return null;
 		}
-		
+
 		UserPortfolioBean folio = new UserPortfolioBean();
 		folio.setAge(thisUser.getAge());
 		folio.setCointels(thisUser.getAccount().getCointels());
@@ -143,11 +147,12 @@ public class UsersService {
 		folio.setRole(thisUser.getRole().toString());
 
 		folio.setShortSellsInPossession(thisUser.getAccount().getShortSells());
-		
-		folio.setStatementsInPossession(thisUser.getAccount().getStatementsInPossession());
+
+		folio.setStatementsInPossession(thisUser.getAccount()
+				.getStatementsInPossession());
 		folio.setUsername(thisUser.getUserName());
 		folio.setWeatlh(thisUser.getAccount().getTotalWealth());
-		
+
 		return folio;
 	}
 }

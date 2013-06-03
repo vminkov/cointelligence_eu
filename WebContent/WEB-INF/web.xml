@@ -34,6 +34,15 @@
 		<servlet-name>UserLoginServlet</servlet-name>
 		<servlet-class>eu.cointelligence.controller.servlet.UserLoginServlet</servlet-class>
 	</servlet>
+	<servlet>
+		<display-name>AskQuestionServlet</display-name>
+		<servlet-name>AskQuestionServlet</servlet-name>
+		<servlet-class>eu.cointelligence.controller.servlet.AskQuestionServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AskQuestionServlet</servlet-name>
+		<url-pattern>/AskQuestionServlet</url-pattern>
+	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>DispatcherSerlvet</servlet-name>
 		<url-pattern>/rest/*</url-pattern>

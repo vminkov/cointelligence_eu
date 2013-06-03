@@ -59,8 +59,8 @@ public class UserLoginServlet extends HttpServlet {
 				
 				System.out.println("Created ADMIN account with user/pass: " + "admin / kokikoki");
 
-				System.out.println("This could never happen");
     		} catch (UserExistsException e) {
+    			System.out.println("This could never happen");
 				e.printStackTrace();
 			} catch (UserCreationException e) {
 				System.out.println("that's bad - there is no admin account - create one from the database");
@@ -114,13 +114,16 @@ public class UserLoginServlet extends HttpServlet {
 						return;
 					}
 				} catch(WrongPasswordException e) {
-					this.log.log("login", username, false, request.getRemoteAddr(), "wrong password");
+					if(log != null)
+						this.log.log("login", username, false, request.getRemoteAddr(), "wrong password");
 					message = "Wrong username / password!";
 				} catch (NoSuchUserException e) {
-					this.log.log("login", username, false, request.getRemoteAddr(), "no such user");
+					if(log != null)
+						this.log.log("login", username, false, request.getRemoteAddr(), "no such user");
 					message = "Wrong username / password!";
 				} catch (javax.resource.spi.SecurityException e) {
-					this.log.log("login", username, false, request.getRemoteAddr(), "role violation");
+					if(log != null)
+						this.log.log("login", username, false, request.getRemoteAddr(), "role violation");
 					message = "You are not allowed to do this!";
 				}
 			}
@@ -128,7 +131,8 @@ public class UserLoginServlet extends HttpServlet {
 			//works for forwarding only
 			request.setAttribute(Constants.MESSAGE_REQUEST_ATTR_NAME, message);
 
-			response.sendRedirect(this.getServletContext().getContextPath() + Constants.LOGIN_PAGE);
+			request.getRequestDispatcher("login.jsp").forward(request, response);
+//			response.sendRedirect(this.getServletContext().getContextPath() + Constants.LOGIN_PAGE);
 		} catch (Throwable e) {
 			e.printStackTrace();
 			throw new RuntimeException("Unexpected error", e);

@@ -26,6 +26,7 @@ public class AuditLog {
 
 	public synchronized boolean log(String operation, String user, boolean status, String ip, String message) {
 		String auditLogPath = context.getRealPath("/WEB-INF/logs/audit.log");
+		System.out.println(auditLogPath);
 		FileWriter fileWriter = null;
 		File auditLog = new File(auditLogPath);
 		try {

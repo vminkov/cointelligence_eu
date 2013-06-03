@@ -39,10 +39,9 @@ public class MarketMaker implements IMarketMaker {
 				Statement st = new Statement();
 				st.setCurrentValue(new Long(30 + 10*i));
 				if(i < 5)
-					st.setDescription("The describtion " + i);
+					st.setDescription("The description " + i);
 				
 				//st.setId(new Long(i));
-				st.setOwnersGroup(UserRole.USER);
 				if(i > 0)
 					st.setTitle(i + "'s title");
 				st.setVoteStarted( i % 2 == 0);
@@ -73,7 +72,6 @@ public class MarketMaker implements IMarketMaker {
 
 	@Override
 	public boolean addLog(Transaction log) {
-		log.setId(UUID.randomUUID().getLeastSignificantBits());
 		return (this.transactionsDao.create(log) != null);
 	}
 
@@ -84,13 +82,13 @@ public class MarketMaker implements IMarketMaker {
 
 	//TODO
 	@Override
-	@Schedule(hour = "*", minute = "*/5")
+	@Schedule(hour = "*", minute = "*/1")
 	public void recomputePrices() {
 		System.out.println("RECALCULATING!");
 		//List<Transaction> logs = transactionsDao.getAllTransaction();
 		
 		//WE USE THESE LOGS!! filter in order to not overflow the memory
-		List<Transaction> logs = transactionsDao.filter("checkedByMarketMaker", false);
+		List<Transaction> logs = transactionsDao.getAllTransaction();
 		
 		statementsAndPrices = new HashMap<>();
 		List<Statement> statements = this.statementsDao.getStatements();
