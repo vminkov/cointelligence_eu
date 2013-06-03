@@ -1,4 +1,5 @@
-
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <div id="questionWrapper" class="span5">
 
 	<a href="#modalQuestion" role="button" data-toggle="modal"> <img
@@ -11,8 +12,8 @@
 				aria-hidden="true">×</button>
 			<h3 id="H2">Задай въпрос!</h3>
 		</div>
-		<div class="modal-body">
-			<form class="form-horizontal">
+		<form class="form-horizontal" action="AskQuestionServlet" method="post">
+			<div class="modal-body">
 				<div class="control-group">
 					<label class="control-label" for="headline">Заглавие на
 						въпроса</label>
@@ -26,22 +27,23 @@
 					<label class="control-label" for="description">Описание на
 						въпроса</label>
 					<div class="controls">
-						<textarea id="description" placeholder="description"></textarea>
+						<textarea id="description" placeholder="description"
+							name="description"></textarea>
 					</div>
 				</div>
 				<div class="control-group">
 					<label for="date" class="control-label">Дата на падеж</label>
 					<div class="controls">
 
-						<input type="datetime-local" id="date" />
+						<input type="datetime-local" id="date" name="duedate" />
 					</div>
 				</div>
-			</form>
-		</div>
-		<div class="modal-footer">
-			<button class="btn" data-dismiss="modal" aria-hidden="true">Затвори</button>
-			<button class="btn btn-primary">Задай въпроса!</button>
-		</div>
+			</div>
+			<div class="modal-footer">
+				<button class="btn" data-dismiss="modal" aria-hidden="true">Затвори</button>
+				<input class="btn btn-primary" value="Задай въпроса!" type="submit" />
+			</div>
+		</form>
 	</div>
 </div>
 

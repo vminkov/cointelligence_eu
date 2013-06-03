@@ -20,4 +20,14 @@ public class Constants {
 	public static final String RELEASE_INIT_PARAM = "release";
 
 	public static final Long MAX_PRICE_FOR_A_STATMENT = new Long(100);
+
+	public static final String QUESTION_TITLE_REQUEST_PARAM_NAME = "title";
+
+	public static final String QUESTION_DESCR_REQUEST_PARAM_NAME = "description";
+
+	public static final String QUESTION_VOTE_REQUEST_PARAM_NAME = "voteStarted";
+
+	public static final String QUESTION_DUEDATE_REQUEST_PARAM_NAME = "duedate";
+
+	public static final String QUESTION_START_PRICE_REQUEST_PARAM_NAME = "startPrice";
 }

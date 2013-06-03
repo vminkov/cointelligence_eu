@@ -2,6 +2,7 @@ package eu.cointelligence.model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Basic;
@@ -16,6 +17,8 @@ public class StatementStake {
 	private Statement statement;
 	@Basic
 	private Long sharesCount;
+	@ManyToOne
+	private Account account;
 
 	public long getId() {
 		return id;
@@ -39,6 +42,11 @@ public class StatementStake {
 
 	public Long getSharesCount() {
 		return sharesCount;
+	}
+
+	public void setAccount(Account account) {
+		this.account = account;
+		
 	}
 
 }

@@ -5,9 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.persistence.Basic;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,7 +13,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import eu.cointelligence.controller.entity.TradingAction;
 import eu.cointelligence.model.ShortSell;
 
 @Entity
@@ -24,16 +21,16 @@ public class Account {
 
 	@Basic
 	private Long cointels;
-	@OneToMany 
+	@OneToMany(mappedBy = "account")
 	private Collection<StatementStake> statementsStakes;
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	@OneToMany
 	private Collection<Idea> ideas;
-	@OneToMany
+	@OneToMany(mappedBy = "account")
 	private Collection<Transaction> transactions;
-	@OneToMany
+	@OneToMany(mappedBy = "account")
 	private Collection<ShortSell> shortSells;
 	@Transient
 	private Long totalWealth;
@@ -138,5 +135,9 @@ public class Account {
 		this.statementsStakes.add(stake);
 		
 		//persist?
+	}
+
+	public Collection<StatementStake> getStatementStake() {
+		return this.statementsStakes;
 	}
 }

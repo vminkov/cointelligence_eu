@@ -7,11 +7,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonParseException;
-
-import eu.cointelligence.controller.users.UserRole;
-
 @Entity
 @Table(name = "t_statement")
 public class Statement {
@@ -21,14 +16,16 @@ public class Statement {
 	@Basic
 	private String description;
 	@Basic
-	private String ownersGroup;
-	@Basic
 	private Boolean voteStarted;
 	@Basic 
 	private Long currentValue;
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
+	
+	public Statement(){
+		//setId(UUID.randomUUID().getMostSignificantBits());
+	}
 
 	public void setTitle(String param) {
 		this.title = param;
@@ -68,13 +65,5 @@ public class Statement {
 
 	public Long getId() {
 		return id;
-	}
-	
-	public UserRole getOwnersGroup() {
-		return UserRole.valueOf(ownersGroup);
-	}
-	
-	public void setOwnersGroup(UserRole ownersGroup) {
-		this.ownersGroup = ownersGroup.toString();
 	}
 }

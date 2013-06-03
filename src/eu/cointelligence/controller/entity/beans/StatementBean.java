@@ -1,6 +1,7 @@
 package eu.cointelligence.controller.entity.beans;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonParseException;
@@ -14,6 +15,7 @@ public class StatementBean implements Serializable{
 	private Boolean voteStarted;
 	private Long currentValue;
 	private Long id;
+	private Date duedate;
 	
 	public String getTitle() {
 		return title;
@@ -58,5 +60,11 @@ public class StatementBean implements Serializable{
 	}
 	public void setId(Long id) {
 		this.id = id;
+	}
+	public Date getDuedate() {
+		return duedate;
+	}
+	public void setDuedate(Date duedate) {
+		this.duedate = duedate;
 	}
 }

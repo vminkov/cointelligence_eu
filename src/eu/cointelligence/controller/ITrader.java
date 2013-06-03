@@ -2,6 +2,7 @@ package eu.cointelligence.controller;
 
 import java.util.List;
 
+import eu.cointelligence.controller.entity.beans.StatementBean;
 import eu.cointelligence.model.Account;
 import eu.cointelligence.model.Statement;
 
@@ -23,5 +24,8 @@ public interface ITrader {
 
 	public boolean shortSell(String username, String password, Long statementId,
 			Long quantity, Long minutes);
+
+	boolean submitStatement(String username, String password,
+			StatementBean statement);
 
 }

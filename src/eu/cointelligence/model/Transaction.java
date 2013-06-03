@@ -1,6 +1,11 @@
 package eu.cointelligence.model;
 
+import java.sql.Timestamp;
+import java.util.Date;
+import java.util.UUID;
+
 import javax.persistence.Basic;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
@@ -26,8 +31,10 @@ public class Transaction {
 	@ManyToOne
 	private Account account;
 	@Id
-//    @GeneratedValue(strategy=GenerationType.IDENTITY)
+	// @GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
+	@Column(name = "TIMESTAMP_FIELD")
+	private java.sql.Timestamp timestamp;
 
 	public Transaction() {
 	}
@@ -38,7 +45,9 @@ public class Transaction {
 		setStatement(statement);
 		setPriceAtTrade(statement.getCurrentValue());
 		setOrderType(orderType);
-		setAmount(amount);
+		setAmount(amount.longValue());
+		timestamp = new Timestamp(System.currentTimeMillis());
+		setId(UUID.randomUUID().getLeastSignificantBits());
 	}
 
 	public void setAmount(long param) {
@@ -97,11 +106,15 @@ public class Transaction {
 		this.account = param;
 	}
 
-	public void setId(Long param) {
+	private void setId(Long param) {
 		this.id = param;
 	}
 
 	public Long getId() {
 		return id;
+	}
+
+	public Date getTimestamp() {
+		return timestamp;
 	}
 }

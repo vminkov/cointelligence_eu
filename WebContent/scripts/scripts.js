@@ -1,7 +1,24 @@
 ﻿  function customJS() {
+
+	//adding sortBy to the prototype of the array
+	  function dynamicSort(property) {
+	      var sortOrder = -1;
+	      if (property[0] === "-") {
+	          sortOrder = -1;
+	          property = property.substr(1, property.length - 1);
+	      }
+	      return function (a, b) {
+	          var result = (a[property] < b[property]) ? -1 : (a[property] > b[property]) ? 1 : 0;
+	          return result * sortOrder;
+	      };
+	  }
+	  Array.prototype.sortBy = function (property) {
+	      return this.sort(dynamicSort(property))
+	  };
+	  
     var paths = {};
-    paths.stetements = 'testJSON/testStatements.js'; //'http://localhost:8080/cointelligence_eu/rest/statements';
-    paths.users = 'testJSON/users.js';
+    paths.stetements = 'rest/statements';
+    paths.users = 'rest/users/ranking'; 
 //    counter = 0;
 //    function nalqvo(){
 //    	counter--;
@@ -21,8 +38,8 @@
             var row = $('<tr class="questionRow"/>');
             row.append("<td class='titleCol questionCol'> " + obj.title + "</td>");
             row.append("<td class='descCol questionCol'><i class='icon-info-sign'></i>" + obj.description + "</td>");
-            row.append("<td class='priceCol questionCol'><p class='btn btn-info'>" + obj.currentValue + "</p></td>");
-            row.append("<td class='priceCol questionCol'> <a class='btn btn-success' href='#statement" + obj.id + "' role='button' data-toggle='modal'>" + "Търгувай</a></td>");
+            row.append("<td class='priceCol questionCol'><p class='btn btn-info customSellButton'>" + obj.currentValue + "</p></td>");
+            row.append("<td class='priceCol questionCol'> <a class='btn btn-success customSellButton' href='#statement" + obj.id + "' role='button' data-toggle='modal'>" + "Търгувай</a></td>");
             $('#statementsInfo').append(row);
             var modalQuestion = document.createElement("div");
             setModalProperties(modalQuestion,obj);
@@ -64,11 +81,12 @@
     });
 
     var readPlayersRanking = $.getJSON(paths.users, function (data) {
-        data.sortBy("cointels");
+      data.sortBy("total");
         $.each(data, function (index, obj) {
             var row = $('<tr class="questionRow"/>');
-            row.append("<td class='nicknameCol questionCol'><i class='icon-user'></i>" + obj.userName + "</td>");
+            row.append("<td class='nicknameCol questionCol'><i class='icon-user'></i>" + obj.username + "</td>");
             row.append("<td class='priceCol questionCol'>" + obj.cointels + "</td>");
+            row.append("<td class='priceCol questionCol'>" + obj.total + "</td>");
             $('#rankTable').append(row);
         });
     }).fail(function () {
@@ -318,11 +336,11 @@
         }else{
             alert("Избери опция за да търгуваш с твърдението!")
         }
-        //dealForm.username = userrmation.username; //TODO uncomment when comit js
+        dealForm.username = userrmation.username; //TODO uncomment when comit js
         
-        //dealForm.password = userrmation.password; //TODO uncomment when comit js
+        dealForm.password = userrmation.password; //TODO uncomment when comit js
 
-        url = "http://localhost:8080/cointelligence_eu/rest/trader/"+selectedInput;
+        url = "rest/trader/"+selectedInput;
         $.ajax({
             "url": url,
             "type": "POST",
@@ -396,21 +414,6 @@
 };
   customJS();
 
-//adding sortBy to the prototype of the array
-  function dynamicSort(property) {
-      var sortOrder = -1;
-      if (property[0] === "-") {
-          sortOrder = -1;
-          property = property.substr(1, property.length - 1);
-      }
-      return function (a, b) {
-          var result = (a[property] < b[property]) ? -1 : (a[property] > b[property]) ? 1 : 0;
-          return result * sortOrder;
-      }
-  }
-  Array.prototype.sortBy = function (property) {
-      return this.sort(dynamicSort(property))
-  }
 
 
 
