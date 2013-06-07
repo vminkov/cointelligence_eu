@@ -20,9 +20,9 @@ public class Transaction {
 	private long amount;
 	@Basic
 	private long priceAtTrade;
-	@Basic
+	@Column(length=130)
 	private String state;
-	@Basic
+	@Column(length=130)
 	private String orderType;
 	@OneToOne
 	private Statement statement;

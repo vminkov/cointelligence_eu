@@ -13,6 +13,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import eu.cointelligence.controller.Constants;
 import eu.cointelligence.model.ShortSell;
 
 @Entity
@@ -24,7 +25,7 @@ public class Account {
 	@OneToMany(mappedBy = "account")
 	private Collection<StatementStake> statementsStakes;
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	@OneToMany
 	private Collection<Idea> ideas;
@@ -34,7 +35,7 @@ public class Account {
 	private Collection<ShortSell> shortSells;
 	@Transient
 	private Long totalWealth;
-	
+
 	public void setCointels(Long param) {
 		this.cointels = param;
 	}
@@ -46,13 +47,21 @@ public class Account {
 	public void setStatementsStakes(Collection<StatementStake> param) {
 		this.statementsStakes = param;
 	}
- 
+
 	public Map<Long, Long> getStatementsInPossession() {
-		Map<Long, Long> result = new HashMap<Long, Long>();
-		for(StatementStake stake : this.statementsStakes){
-			result.put(stake.getStatement().getId(), stake.getSharesCount());
+		Map<Long, Long> statementsInPossession = new HashMap<Long, Long>();
+		for (StatementStake stake : this.statementsStakes) {
+			Long countUntilNow = statementsInPossession.get(stake
+					.getStatement().getId());
+			if (countUntilNow == null) {
+				countUntilNow = new Long(0);
+			}
+
+			countUntilNow += stake.getSharesCount();
+			statementsInPossession.put(stake.getStatement().getId(),
+					countUntilNow);
 		}
-		return result;
+		return statementsInPossession;
 	}
 
 	public void setId(Long param) {
@@ -64,35 +73,33 @@ public class Account {
 	}
 
 	public Collection<Idea> getIdeas() {
-	    return ideas;
+		return ideas;
 	}
 
 	public void setIdeas(Collection<Idea> param) {
-	    this.ideas = param;
+		this.ideas = param;
 	}
 
 	public Collection<Transaction> getTransactions() {
-	    return transactions;
+		return transactions;
 	}
 
 	public void setTransactions(Collection<Transaction> param) {
-	    this.transactions = param;
+		this.transactions = param;
 	}
 
 	public Collection<ShortSell> getShortSells() {
-	    return shortSells;
-	}
-
-	public void setShortSells(Collection<ShortSell> param) {
-	    this.shortSells = param;
+		return shortSells;
 	}
 
 	public Long getShortSellsCountForStatement(Long stId) {
 		Long owned = new Long(0);
-		for(ShortSell shortSell : getShortSells()){
-			if(shortSell.getTransaction().getStatement().getId() == stId 
-				//	&& TradingAction.SHORTSELL.toString().equals(transaction.getOrderType())) //unnecessary?
-					){
+		for (ShortSell shortSell : getShortSells()) {
+			if (shortSell.getTransaction().getStatement().getId() == stId
+			// &&
+			// TradingAction.SHORTSELL.toString().equals(transaction.getOrderType()))
+			// //unnecessary?
+			) {
 				owned += shortSell.getAmount();
 			}
 		}
@@ -101,14 +108,18 @@ public class Account {
 
 	public Long getTotalWealth() {
 		Long wealth = this.getCointels();
-		for(StatementStake stake : this.statementsStakes){
-			Long cashForStake = stake.getSharesCount() * stake.getStatement().getCurrentValue();
+		for (StatementStake stake : this.statementsStakes) {
+			Long cashForStake = stake.getSharesCount()
+					* stake.getStatement().getCurrentValue();
 			wealth += cashForStake;
 		}
-		
-		for(ShortSell sell : shortSells){
-			Long cashForShort = sell.getAmount() * (sell.getTransaction().getPriceAtTrade() - sell.getTransaction().getStatement().getCurrentValue());
-			
+
+		for (ShortSell sell : shortSells) {
+			Long cashForShort = sell.getAmount()
+					* (Constants.MAX_PRICE_FOR_A_STATMENT
+							+ sell.getTransaction().getPriceAtTrade() - sell
+							.getTransaction().getStatement().getCurrentValue());
+
 			wealth += cashForShort;
 		}
 		this.totalWealth = wealth;
@@ -118,23 +129,6 @@ public class Account {
 	public Long getSharesForStatement(Long id2) {
 		// TODO Auto-generated method stub
 		return null;
-	}
-
-	public void updateStatementStake(Statement statement, Long newOwnedQuantity) {
-		for(StatementStake st : this.statementsStakes){
-			if(st.getId() == statement.getId()){
-				st.setSharesCount(newOwnedQuantity);
-				return;
-			}
-		}
-		
-		//else
-		StatementStake stake = new StatementStake();
-		stake.setStatement(statement);
-		stake.setSharesCount(newOwnedQuantity);
-		this.statementsStakes.add(stake);
-		
-		//persist?
 	}
 
 	public Collection<StatementStake> getStatementStake() {

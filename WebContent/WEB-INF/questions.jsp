@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<div id="questionWrapper" class="span5">
+<div id="questionWrapper" class="span4">
 
 	<a href="#modalQuestion" role="button" data-toggle="modal"> <img
 		src="img/question.png" width="400" /></a>
@@ -12,7 +12,7 @@
 				aria-hidden="true">×</button>
 			<h3 id="H2">Задай въпрос!</h3>
 		</div>
-		<form class="form-horizontal" action="AskQuestionServlet" method="post">
+		<form class="form-horizontal" action="AskQuestionServlet" method="post" accept-charset="UTF-8">
 			<div class="modal-body">
 				<div class="control-group">
 					<label class="control-label" for="headline">Заглавие на

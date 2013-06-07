@@ -14,11 +14,6 @@ public class StatementsDao extends GenericDaoImpl<Statement> {
 		super(Statement.class);
 	}
 
-	public String getStatementById(String id){
-		System.out.println(em != null);
-		return new String(new Boolean(em != null).toString());
-	}
-	
 	public List<Statement> getStatements(){
 		Query q = em.createQuery("SELECT s from " + Statement.class.getName() + " as s");
 	

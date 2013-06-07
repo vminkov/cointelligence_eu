@@ -22,7 +22,7 @@ public class UserPortfolioBean {
 	private Map<Long, Long> shortSellsInPossession;
 	private Long cointels;
 	
-	private Long weatlh;
+	private Long wealth;
 	
 	public String getFullname() {
 		return fullname;
@@ -96,16 +96,17 @@ public class UserPortfolioBean {
 			this.shortSellsInPossession.put(statementId, possessed);
 		}
 	}
+	
 	public Long getCointels() {
 		return cointels;
 	}
 	public void setCointels(Long cointels) {
 		this.cointels = cointels;
 	}
-	public Long getWeatlh() {
-		return weatlh;
+	public Long getWealth() {
+		return wealth;
 	}
-	public void setWeatlh(Long weatlh) {
-		this.weatlh = weatlh;
+	public void setWealth(Long wealth) {
+		this.wealth = wealth;
 	}
 }

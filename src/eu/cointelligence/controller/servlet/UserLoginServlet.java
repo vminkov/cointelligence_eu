@@ -4,6 +4,7 @@ import java.io.IOException;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -83,6 +84,12 @@ public class UserLoginServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		System.out.println("context path "+request.getContextPath());
+		System.out.println("servlet context "+getServletContext());
+		request.setCharacterEncoding("UTF-8");
+		
+		this.getServletContext().setAttribute("userManager", this.userManager);
+		
 		String username = request
 				.getParameter(Constants.USERNAME_REQUEST_PARAM_NAME);
 		String password = request
@@ -98,17 +105,13 @@ public class UserLoginServlet extends HttpServlet {
 	
 					if (loginBean != null) {
 						// successful login
-						User userInfo = new User();
-						userInfo.setUserName(loginBean.getUserName());
-						userInfo.setFullName(loginBean.getFullName());
-						userInfo.setEmail(loginBean.getEmail());
-						userInfo.setPasswordHash(loginBean.getPasswordHash());
 						
 						HttpSession session = request.getSession();
 						session.setAttribute(Constants.USER_INFO_SESSION_ATTR_NAME,
-								userInfo);
+								loginBean); 
 						
-//						response.addCookie(new Cookie("jsession", userInfo.getPasswordHash()));
+						response.addCookie(new Cookie("jsession", loginBean.getPasswordHash()));
+						response.addCookie(new Cookie("username", loginBean.getUserName()));
 						this.log.log("login", username, true, request.getRemoteAddr());
 						response.sendRedirect(request.getContextPath() + Constants.MAIN_PAGE);
 						return;

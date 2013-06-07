@@ -30,11 +30,6 @@ public class ShortSell {
 		id = UUID.randomUUID().getLeastSignificantBits();
 	}
 
-	public ShortSell(Long quantity, Transaction transaction2, Account account2) {
-		this.amount = quantity;
-		this.transaction = transaction2;
-		this.account = account2;
-	}
 
 	@OneToOne
 	private Transaction transaction; 

@@ -3,8 +3,6 @@ package eu.cointelligence.controller;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
-
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.ejb.Schedule;
@@ -13,7 +11,7 @@ import javax.ejb.Startup;
 
 import eu.cointelligence.controller.dao.StatementsDao;
 import eu.cointelligence.controller.dao.TransactionsDao;
-import eu.cointelligence.controller.users.UserRole;
+import eu.cointelligence.controller.pricing.PricingAlgorithmFactory;
 import eu.cointelligence.model.Statement;
 import eu.cointelligence.model.Transaction;
 
@@ -108,10 +106,10 @@ public class MarketMaker implements IMarketMaker {
 		}
 		
 		
-		//TODO: make it a batch commit (turn auto commit off and then commit?)
-		for(Transaction log : logs){
-			transactionsDao.update(log);
-		}
+//		//TODO: make it a batch commit (turn auto commit off and then commit?)
+//		for(Transaction log : logs){
+//			transactionsDao.update(log);
+//		}
 	}
 
 }

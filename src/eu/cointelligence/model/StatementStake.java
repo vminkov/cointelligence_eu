@@ -1,5 +1,7 @@
 package eu.cointelligence.model;
 
+import java.util.UUID;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
@@ -12,6 +14,7 @@ import javax.persistence.Basic;
 public class StatementStake {
 
 	@Id
+//	@GeneratedValue(strategy=GenerationType.SEQUENCE)
 	private long id;
 	@OneToOne
 	private Statement statement;
@@ -19,13 +22,13 @@ public class StatementStake {
 	private Long sharesCount;
 	@ManyToOne
 	private Account account;
+	
+	public StatementStake(){
+		id = UUID.randomUUID().getMostSignificantBits();
+	}
 
 	public long getId() {
 		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
 	}
 
 	public Statement getStatement() {

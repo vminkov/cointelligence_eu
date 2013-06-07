@@ -127,7 +127,7 @@ public class UsersService {
 	@Produces(MediaType.APPLICATION_JSON)
 	public UserPortfolioBean getPersonalInfo(
 			@FormParam("username") String username,
-			@FormParam("password") String password) {
+			@FormParam("token") String password) {
 		if (username == null || password == null) {
 			return null;
 		}
@@ -151,7 +151,7 @@ public class UsersService {
 		folio.setStatementsInPossession(thisUser.getAccount()
 				.getStatementsInPossession());
 		folio.setUsername(thisUser.getUserName());
-		folio.setWeatlh(thisUser.getAccount().getTotalWealth());
+		folio.setWealth(thisUser.getAccount().getTotalWealth());
 
 		return folio;
 	}

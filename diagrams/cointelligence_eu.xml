@@ -2,20 +2,9 @@
 	<entity>
 		<entity-name>eu.cointelligence.model.Idea</entity-name>
 		<entity-width>120</entity-width>
-		<entity-height>186</entity-height>
+		<entity-height>246</entity-height>
 		<entity-X-Coordinate>180</entity-X-Coordinate>
 		<entity-Y-Coordinate>42</entity-Y-Coordinate>
-		<primary-collapsed>false</primary-collapsed>
-		<relation-collapsed>false</relation-collapsed>
-		<basic-collapsed>false</basic-collapsed>
-	</entity>
-
-	<entity>
-		<entity-name>eu.cointelligence.model.Transaction</entity-name>
-		<entity-width>120</entity-width>
-		<entity-height>266</entity-height>
-		<entity-X-Coordinate>444</entity-X-Coordinate>
-		<entity-Y-Coordinate>28</entity-Y-Coordinate>
 		<primary-collapsed>false</primary-collapsed>
 		<relation-collapsed>false</relation-collapsed>
 		<basic-collapsed>false</basic-collapsed>
@@ -33,9 +22,20 @@
 	</entity>
 
 	<entity>
+		<entity-name>eu.cointelligence.model.Transaction</entity-name>
+		<entity-width>120</entity-width>
+		<entity-height>266</entity-height>
+		<entity-X-Coordinate>444</entity-X-Coordinate>
+		<entity-Y-Coordinate>28</entity-Y-Coordinate>
+		<primary-collapsed>false</primary-collapsed>
+		<relation-collapsed>false</relation-collapsed>
+		<basic-collapsed>false</basic-collapsed>
+	</entity>
+
+	<entity>
 		<entity-name>eu.cointelligence.model.Statement</entity-name>
 		<entity-width>120</entity-width>
-		<entity-height>168</entity-height>
+		<entity-height>228</entity-height>
 		<entity-X-Coordinate>685</entity-X-Coordinate>
 		<entity-Y-Coordinate>28</entity-Y-Coordinate>
 		<primary-collapsed>false</primary-collapsed>
@@ -46,7 +46,7 @@
 	<entity>
 		<entity-name>eu.cointelligence.model.User</entity-name>
 		<entity-width>120</entity-width>
-		<entity-height>266</entity-height>
+		<entity-height>286</entity-height>
 		<entity-X-Coordinate>20</entity-X-Coordinate>
 		<entity-Y-Coordinate>167</entity-Y-Coordinate>
 		<primary-collapsed>false</primary-collapsed>

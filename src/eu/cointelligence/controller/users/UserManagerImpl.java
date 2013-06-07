@@ -14,6 +14,7 @@ import javax.resource.spi.SecurityException;
 
 import eu.cointelligence.controller.Constants;
 import eu.cointelligence.controller.dao.AccountsDao;
+import eu.cointelligence.controller.dao.StatementsDao;
 import eu.cointelligence.controller.dao.UsersDao;
 import eu.cointelligence.controller.users.exceptions.NoSuchUserException;
 import eu.cointelligence.controller.users.exceptions.UserCreationException;
@@ -30,7 +31,9 @@ public class UserManagerImpl implements IUserManager {
 	private UsersDao usersDao;
 	@EJB
 	private AccountsDao accountsDao;
-
+	@EJB
+	private StatementsDao statementsDao;
+	
 	@Override
 	public void removeUser(String username, String comment) {
 		// TODO Auto-generated method stub
@@ -47,7 +50,13 @@ public class UserManagerImpl implements IUserManager {
 
 		final String userSearch = username.toLowerCase();
 
-		User user = this.usersDao.find(userSearch);
+		List<User> result = this.usersDao.filter("userName", userSearch);
+
+		User user = null;
+		if(result.size() == 1){
+			user = result.get(0);
+		} 
+		
 		if (user == null) {
 			throw new NoSuchUserException();
 		}
@@ -79,7 +88,13 @@ public class UserManagerImpl implements IUserManager {
 
 		final String userSearch = username.toLowerCase();
 
-		User user = this.usersDao.find(userSearch);
+		List<User> result = this.usersDao.filter("userName", userSearch);
+
+		User user = null;
+		if(result.size() == 1){
+			user = result.get(0);
+		} 
+		
 		if (user == null) {
 			throw new NoSuchUserException();
 		}
@@ -102,8 +117,14 @@ public class UserManagerImpl implements IUserManager {
 					+ " password: " + password + " are not valid");
 
 		final String userSearch = username.toLowerCase();
-
-		User user = this.usersDao.find(userSearch);
+		List<User> result = this.usersDao.filter("userName", userSearch);
+		if(result.size() > 1){
+			throw new UserCreationException(new Exception("multiple users with the same username!!"));
+		}
+		User user = null;
+		if(result.size() == 1){
+			user = result.get(0);
+		}
 		try {
 			if (user != null) {
 				System.out.println("found the user " + user.getUserName());
@@ -168,9 +189,14 @@ public class UserManagerImpl implements IUserManager {
 					+ " are not valid");
 
 		final String userSearch = username.toLowerCase();
+		List<User> result = this.usersDao.filter("userName", userSearch);
 
-		User user = this.usersDao.find(userSearch);
-
+		User user = null;
+		if(result.size() == 1){
+			user = result.get(0);
+		} else {
+			return false;
+		}
 		return user.getRole().equals(UserRole.ADMIN);
 	}
 
@@ -181,9 +207,14 @@ public class UserManagerImpl implements IUserManager {
 					+ " is not valid");
 
 		final String userSearch = username.toLowerCase();
+		List<User> result = this.usersDao.filter("userName", userSearch);
 
-		User user = this.usersDao.find(userSearch);
-
+		User user = null;
+		if(result.size() == 1){
+			user = result.get(0);
+		} else {
+			return false;
+		}
 		return user.getRole().equals(UserRole.MANAGER);
 	}
 
@@ -194,11 +225,14 @@ public class UserManagerImpl implements IUserManager {
 					+ " is not valid");
 
 		final String userSearch = username.toLowerCase();
+		List<User> result = this.usersDao.filter("userName", userSearch);
 
-		User user = this.usersDao.find(userSearch);
-		if (user == null)
+		User user = null;
+		if(result.size() == 1){
+			user = result.get(0);
+		} else {
 			return false;
-
+		}
 		return user.getRole().equals(UserRole.USER);
 	}
 
@@ -209,8 +243,14 @@ public class UserManagerImpl implements IUserManager {
 					+ " password: " + password + " are not valid");
 
 		final String userSearch = username.toLowerCase();
+		
+		List<User> result = this.usersDao.filter("userName", userSearch);
 
-		return this.usersDao.find(userSearch);
+		User user = null;
+		if(result.size() == 1){
+			user = result.get(0);
+		}
+		return user;
 
 	}
 
@@ -220,7 +260,7 @@ public class UserManagerImpl implements IUserManager {
 		// if (user.getPassword() != null)
 		// return null;
 
-		User result = this.usersDao.find(user.getUserName());
+		User result = this.usersDao.find(user.getId());
 		User merged = this.usersDao.update(result);
 
 		merged.setAge(user.getAge());

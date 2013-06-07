@@ -30,4 +30,27 @@ public class Constants {
 	public static final String QUESTION_DUEDATE_REQUEST_PARAM_NAME = "duedate";
 
 	public static final String QUESTION_START_PRICE_REQUEST_PARAM_NAME = "startPrice";
+
+	public static final String SHORT_SELLS_NAME = "short";
+
+	public static final String STATEMENT_FEATURES_NAME = "bought";
+
+	public static final String COINTELS_NAME = "cointels";
+
+	public static final String STATEMENT_PRICE_NAME = "currentValue";
+
+	public static final String WRONG_CREDENTIALS_MESSAGE ="1";// "Сделката е отказана! Моля, презареди страницата!";
+
+	public static final String STATEMENT_INVALID_MESSAGE = "2";//"Сделката е отказана! Моля, презареди страницата!";
+
+	public static final String COINTELS_NOT_ENOUGH = "3"; //"Твоите cointels не са достатъчни за тази сделка!";
+
+	public static final String FEATURES_NOT_ENOUGH = "4"; // "Твоите акции не са достатъчни за тази сделка!";
+
+	public static final String IDEA_COMPANY_REQUEST_PARAM_NAME = "company";
+
+	public static final String IDEAS_PAGE = "/employee.jsp";
+
+	public static final String ENCODING = "UTF-8";
+	public static final String IDEAS = "ideas";
 }

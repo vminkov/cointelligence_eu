@@ -8,11 +8,11 @@ import eu.cointelligence.model.Statement;
 
 public interface ITrader {
 
-	public boolean buy(String username, String password,
+	public String buy(String username, String password,
 			Long statementId,
 			Long wantedQuantity);
 
-	public boolean sell(String username, String password,
+	public String sell(String username, String password,
 			Long statementId,
 			Long quantity);
 
@@ -22,7 +22,7 @@ public interface ITrader {
 
 	public Statement getStatementById(Long statementId);
 
-	public boolean shortSell(String username, String password, Long statementId,
+	public String shortSell(String username, String password, Long statementId,
 			Long quantity, Long minutes);
 
 	boolean submitStatement(String username, String password,

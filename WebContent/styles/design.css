@@ -57,6 +57,11 @@ table {
     top:0.5%;
     left:45%;
 }
+#footer{
+    position:relative;
+    top:95% !important;
+    left:48% !important;
+}
 #logout{
     position:absolute;
     top:0.5%;
@@ -73,7 +78,7 @@ table {
 
 /*baloons ideas*/
 #questionWrapper{
-  margin-left:10%;
+  margin-left:3%;
 }
 #qestionBaloons{
     width:100%;
@@ -102,7 +107,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 /*tables with questions and ranklist*/
 #tablesPart{
  width:100%;
- height: 520px; 
+ height: 650px; 
     padding-top:50px;
         background-image:url(../img/pattern.png);
     padding-bottom:50px;
@@ -195,7 +200,7 @@ text-align:center;
     overflow:auto;
 }
 #rankDiv{
-    width:222px;
+    width:300px;
     margin-left:30%;
 }
 
@@ -273,4 +278,55 @@ footer p{
 }
 #footerLine{
     margin-top:0;
+}
+
+#Carousel{
+	margin-left:20px;
+}
+
+#howWorks{
+   padding-left:15%;
+   padding-right:24 	0px;
+   position:absolute;
+   top:-220px;
+   left:10px;
+   
+}
+#whoAsks{
+    position:absolute;
+    top:-180px;
+    left:10px;
+    width:250px;
+}
+#howTrade{
+    position:absolute;
+    top:-180px;
+    left:320px;
+    
+}
+
+#howBuy{
+    position:absolute;
+    top:-180px;
+    left:630px;
+    width:250px;
+}
+
+#howSell{
+    position:absolute;
+    top:-180px;;
+    left:920px;
+    width:250px;
+}
+
+.modalPosition{
+    position:absolute!important;
+    top:5%!important;
+    left:50%!important;
+}
+
+#tutorial {
+position: absolute;
+left: 1%;
+top: 750px;
 }

@@ -43,6 +43,8 @@
 		</div>
 	</div>
 	<%@include file="WEB-INF/foot.jsp"%>
+	<script src="scripts/scripts.js"></script>
+	
 </body>
 
 </html>

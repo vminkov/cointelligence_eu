@@ -1,4 +1,4 @@
-package eu.cointelligence.controller;
+package eu.cointelligence.controller.pricing;
 
 import java.util.List;
 import java.util.Map;

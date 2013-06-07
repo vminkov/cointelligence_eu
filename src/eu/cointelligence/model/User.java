@@ -1,6 +1,9 @@
 package eu.cointelligence.model;
 
+import java.util.UUID;
+
 import javax.persistence.Basic;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
@@ -13,26 +16,31 @@ import eu.cointelligence.controller.users.UserRole;
 @Table(name = "T_USER")
 public class User {
 
-	@Basic
+	@Column(length=130)
 	private String fullName;
 	@Id
-	@Basic
-	private String userName;
-	@Basic
+	private Long id;
+	@Column(length=130)
 	private String passwordHash;
-	@Basic
+	@Column(length=130)
 	private String email;
-	@Basic
+	@Column(length=130)
 	private String roleString;
 	@Basic
 	private int age;
-	@Basic
+	@Column(length=130)
 	private String genderString;
-	@Basic 
+	@Column(length=130)
 	private String department;
 	@OneToOne
 	private Account account;
-		
+	@Column(unique=true,length=100)
+	private String userName;
+	
+	public User(){
+		if(id == null || new Long(0).equals(id))
+			id = UUID.randomUUID().getLeastSignificantBits();
+	}
 	public int getAge() {
 		return age;
 	}
@@ -103,5 +111,10 @@ public class User {
 	
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	
+
+	public Long getId() {
+		return id;
 	}
 }

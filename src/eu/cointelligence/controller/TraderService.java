@@ -6,6 +6,8 @@ import javax.ws.rs.FormParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+
 import eu.cointelligence.model.Account;
 
 @Stateless
@@ -16,8 +18,8 @@ public class TraderService {
 
 	@POST
 	@Path("/buy")
-	@Produces("application/json")
-	public boolean buy(@FormParam("username") String username,
+	@Produces(MediaType.APPLICATION_JSON)
+	public String buy(@FormParam("username") String username,
 			@FormParam("password") String password,
 			@FormParam("statementId") Long statementId,
 			@FormParam("quantity") Long wantedQuantity) {
@@ -27,8 +29,8 @@ public class TraderService {
 
 	@POST
 	@Path("/sell")
-	@Produces("application/json")
-	public boolean sell(@FormParam("username") String username,
+	@Produces(MediaType.APPLICATION_JSON)
+	public String sell(@FormParam("username") String username,
 			@FormParam("password") String password,
 			@FormParam("statementId") Long statementId,
 			@FormParam("quantity") Long quantity) {
@@ -37,17 +39,16 @@ public class TraderService {
 	}
 
 	@POST
-	@Path("/shortsell")
-	@Produces("application/json")
-	public boolean shortSell(@FormParam("username") String username,
+	@Path("/shortSell")
+	@Produces(MediaType.APPLICATION_JSON)
+	public String shortSell(@FormParam("username") String username,
 			@FormParam("password") String password,
 			@FormParam("statementId") Long statementId,
 			@FormParam("quantity") Long quantity,
 			@FormParam("timeout") Long minutes) {
 
-		// TODO
-		this.trader.shortSell(username, password, statementId, quantity, minutes);
-		return false;
+		return this.trader.shortSell(username, password, statementId, quantity, minutes);
+	
 	}
 
 	@POST

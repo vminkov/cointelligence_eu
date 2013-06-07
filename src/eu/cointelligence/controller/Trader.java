@@ -30,7 +30,7 @@ import eu.cointelligence.model.User;
 public class Trader implements ITrader {
 	@EJB
 	private ShortSellsDao shortSellsDao;
-	
+
 	@EJB
 	private IUserManager userManager;
 
@@ -47,24 +47,24 @@ public class Trader implements ITrader {
 	private StatementStakesDao stakesDao;
 
 	@Override
-	public boolean buy(String username, String password, Long statementId,
+	public String buy(String username, String password, Long statementId,
 			Long wantedQuantity) {
 
 		User user = authenticateUser(username, password);
 		if (user == null || wantedQuantity == null) {
-			return false;
+			return Constants.WRONG_CREDENTIALS_MESSAGE;
 		}
 
 		Statement statement = statementsDao.find(statementId);
 		if (statement == null)
-			return false;
+			return Constants.STATEMENT_INVALID_MESSAGE;
 
 		Long statementPrice = statement.getCurrentValue();
 		Account account = user.getAccount();
 		Long availableCash = account.getCointels();
 		if ((statementPrice == null || availableCash == null)
 				|| (availableCash <= statementPrice * wantedQuantity)) {
-			return false;
+			return Constants.COINTELS_NOT_ENOUGH;
 		}
 
 		// do the action
@@ -83,41 +83,38 @@ public class Trader implements ITrader {
 				TradingAction.BUY.toString(), wantedQuantity);
 		Transaction saved = transactionsDao.create(transaction);
 
-		userManager.updateUserInfo(user);
 		// TODO: make it a database transaction
 		marketMaker.addLog(saved);
-		return true;
+		return "true";
 	}
 
-	private void updateStatementStake(Account account, Statement statement, Long newOwnedQuantity) {
+	private void updateStatementStake(Account account, Statement statement,
+			Long newOwnedQuantity) {
 		Collection<StatementStake> statementStake = account.getStatementStake();
 		for (StatementStake st : statementStake) {
-			if (st.getId() == statement.getId()) {
+			if (statement.getId().equals(st.getStatement().getId())) {
 				st.setSharesCount(newOwnedQuantity);
 				return;
 			}
 		}
 
 		// else
-		StatementStake stake = new StatementStake();
-		stake.setStatement(statement);
-		stake.setSharesCount(newOwnedQuantity);
-		stake.setAccount(account);
-		stake.setId(UUID.randomUUID().getLeastSignificantBits());
-		StatementStake saved = stakesDao.create(stake);
-		statementStake.add(saved);
+		StatementStake saved = stakesDao.create(new StatementStake());
+		saved.setStatement(statement);
+		saved.setSharesCount(newOwnedQuantity);
+		saved.setAccount(account);
 	}
 
 	@Override
-	public boolean sell(String username, String password, Long statementId,
+	public String sell(String username, String password, Long statementId,
 			Long quantity) {
 		User user = authenticateUser(username, password);
 		if (user == null || quantity == null) {
-			return false;
+			return Constants.WRONG_CREDENTIALS_MESSAGE;
 		}
 		Statement statement = statementsDao.find(statementId);
 		if (statement == null)
-			return false;
+			return Constants.STATEMENT_INVALID_MESSAGE;
 
 		Long statementPrice = statement.getCurrentValue();
 
@@ -127,7 +124,7 @@ public class Trader implements ITrader {
 
 		if ((statementPrice == null || ownedQuantity == null)
 				|| (ownedQuantity < quantity)) {
-			return false;
+			return Constants.FEATURES_NOT_ENOUGH;
 		}
 
 		// do the action
@@ -148,7 +145,7 @@ public class Trader implements ITrader {
 		userManager.updateUserInfo(user);
 
 		marketMaker.addLog(transaction);
-		return true;
+		return "true";
 	}
 
 	@Override
@@ -164,21 +161,21 @@ public class Trader implements ITrader {
 	}
 
 	@Override
-	public boolean shortSell(String username, String password,
-			Long statementId, Long quantity, Long minutes) {
+	public String shortSell(String username, String password, Long statementId,
+			Long quantity, Long minutes) {
 
 		User user = authenticateUser(username, password);
 		if (user == null || quantity == null) {
-			return false;
+			return Constants.WRONG_CREDENTIALS_MESSAGE;
 		}
 
 		Statement statement = statementsDao.find(statementId);
 		if (statement == null)
-			return false;
+			return Constants.STATEMENT_INVALID_MESSAGE;
 
 		Long statementPrice = statement.getCurrentValue();
 		if ((statementPrice == null)) {
-			return false;
+			return Constants.STATEMENT_INVALID_MESSAGE;
 		}
 
 		Account account = user.getAccount();
@@ -186,24 +183,25 @@ public class Trader implements ITrader {
 
 		// if the user does not have enough to buy them later at highest price
 		if (cointels < quantity * Constants.MAX_PRICE_FOR_A_STATMENT) {
-			return false;
+			return Constants.COINTELS_NOT_ENOUGH;
 		}
 
 		// no problems to proceed to transaction then
+		account.setCointels(cointels
+				- (quantity * Constants.MAX_PRICE_FOR_A_STATMENT));
 		Transaction transaction = new Transaction(user.getAccount(), statement,
 				TradingAction.SHORTSELL.toString(), quantity);
-		ShortSell sell = new ShortSell(quantity, transaction, account);
-//		sell.setAmount(quantity);
-//		sell.setTransaction(transaction);
-//		sell.setAccount(account);
-		this.shortSellsDao.create(sell);
-		
-		account.setCointels(account.getCointels()
-				- (quantity * Constants.MAX_PRICE_FOR_A_STATMENT));
-		userManager.updateUserInfo(user);
+		this.transactionsDao.create(transaction);
+		ShortSell sell = this.shortSellsDao.create(new ShortSell());
+
+		sell.setAmount(quantity);
+		sell.setTransaction(transaction);
+		sell.setAccount(account);
+
+		// userManager.updateUserInfo(user);
 
 		marketMaker.addLog(transaction);
-		return true;
+		return "true";
 	}
 
 	private User authenticateUser(String username, String password) {
@@ -227,41 +225,40 @@ public class Trader implements ITrader {
 	public Statement getStatementById(Long statementId) {
 		return this.statementsDao.find(statementId);
 	}
-	
+
 	@Override
-	public boolean submitStatement(String username,
-			String password,
-			StatementBean statementBean){
-		
+	public boolean submitStatement(String username, String password,
+			StatementBean statementBean) {
+
 		System.out.println(statementBean);
 		User user = authenticateUser(username, password);
-		if(user == null){
+		if (user == null) {
 			return false;
 		}
-		
-		if(statementBean == null)
+
+		if (statementBean == null)
 			return false;
-		
-		if(statementBean.getTitle() == null || statementBean.getDescription() == null
-				|| "".equals(statementBean.getTitle()) || "".equals(statementBean.getDescription())){
-			return false;
-		}
-		
-		if(statementBean.getDuedate() == null){
+
+		if (statementBean.getTitle() == null
+				|| statementBean.getDescription() == null
+				|| "".equals(statementBean.getTitle())
+				|| "".equals(statementBean.getDescription())) {
 			return false;
 		}
-		if(statementBean.getVoteStarted() == null){
+
+		if (statementBean.getDuedate() == null) {
+			return false;
+		}
+		if (statementBean.getVoteStarted() == null) {
 			statementBean.setVoteStarted(true);
 		}
-		
-		
+
 		Statement statement = this.statementsDao.create(new Statement());
 		statement.setTitle(statementBean.getTitle());
 		statement.setDescription(statementBean.getDescription());
 		statement.setVoteStarted(statementBean.getVoteStarted());
 		statement.setCurrentValue(Constants.DEFAULT_PRICE);
-		
-		
+
 		return true;
 	}
 

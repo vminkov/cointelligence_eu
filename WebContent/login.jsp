@@ -87,6 +87,7 @@
 					<div class="controls">
 						<label class="checkbox"> <input type="checkbox"
 							name="rememberMe" />Запомни ме!
+							<input type='hidden' name='statementId' value=''>
 						</label>
 					</div>
 				</div>

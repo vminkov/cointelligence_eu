@@ -18,16 +18,21 @@ public class UserRoleTest {
 
 	@Test
 	public void test() {
-		UserRole ur1 = UserRole.USER;
-		UserRole ur2 = UserRole.USER;
+		String bad = "Ð´ÑÐ°Ð´Ð°ÑÐ´Ð°ÑÐ´Ðµ";
 		
-		assertTrue(ur1.equals(ur2));
-		String json = "{\"username\":\"testio32\",\"fullname\":\"pylnoto\",\"password\":\"testev\",\"age\":21,\"gender\":\"MALE\",\"department\":\"testers\",\"role\":\"USER\"}";
-		User user = new Gson().fromJson(json, User.class);
 		
-		assertNotNull(user);
 		
-		assertTrue(ur1.equals(user.getRole()));
+		
+//		UserRole ur1 = UserRole.USER;
+//		UserRole ur2 = UserRole.USER;
+//		
+//		assertTrue(ur1.equals(ur2));
+//		String json = "{\"username\":\"testio32\",\"fullname\":\"pylnoto\",\"password\":\"testev\",\"age\":21,\"gender\":\"MALE\",\"department\":\"testers\",\"role\":\"USER\"}";
+//		User user = new Gson().fromJson(json, User.class);
+//		
+//		assertNotNull(user);
+//		
+//		assertTrue(ur1.equals(user.getRole()));
 	}
 
 }

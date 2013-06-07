@@ -1,15 +1,12 @@
 package eu.cointelligence.controller.entity.beans;
 
-import java.io.Serializable;
 import java.util.Date;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonParseException;
 
-import eu.cointelligence.model.Statement;
 
-
-public class StatementBean implements Serializable{
+public class StatementBean {
 	private String title;
 	private String description;
 	private Boolean voteStarted;

@@ -11,21 +11,14 @@
 <body>
 	<div id="wrapper">
 
-		<!-- ЗА ДА ВЛЕЗЕШ В МЕНИДЖЪРСКИЯ ПАНЕЛ НАТИСНИ ГОРЕ "МЕНИДЖЪР" -->
-		<!-- ЗА ДА ВЛЕЗЕШ В СЛУЖИТЕЛСКИЯ ПАНЕЛ НАТИСНИ ГОРЕ "СЛУЖИТЕЛ" -->
 		<div id="tablesPart">
 			<%@include file="WEB-INF/ideas.jsp"%>
-			<%@include file="WEB-INF/statementsTable.jsp"%>
-
-			<!--  insert rankings table -->
-			<%@include file="WEB-INF/rankingsTable.jsp"%>
-
-			<!-- end of first section-->
-
-
+			<%@include file="WEB-INF/ideasTable.jsp"%>
 		</div>
 	</div>
 			<%@include file="WEB-INF/foot.jsp"%>
+			<script src="scripts/scripts.js"></script>
+			
 </body>
 
 </html>
