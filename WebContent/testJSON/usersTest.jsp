@@ -1,3 +1,4 @@
+<%@page import="eu.cointelligence.controller.Constants"%>
 <%@page import="eu.cointelligence.model.User"%>
 <%@page import="eu.cointelligence.controller.users.IUserManager"%>
 <%@page import="eu.cointelligence.controller.entity.Gender"%>
@@ -82,7 +83,7 @@
 	%>
 
 <%
-	userManager = (IUserManager) application.getAttribute("userManager");
+	userManager = (IUserManager) application.getAttribute(Constants.USER_MANAGER);
 	testUsers = (List<RegisterForm>) application.getAttribute("testUsers");
 	if(testUsers == null && userManager.getAllUsers().size() < 10){
 		departments.add("Маркетинг");

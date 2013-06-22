@@ -53,4 +53,6 @@ public class Constants {
 
 	public static final String ENCODING = "UTF-8";
 	public static final String IDEAS = "ideas";
+	public static final String USER_MANAGER = "userManager";
+
 }

@@ -1,3 +1,4 @@
+<%@page import="eu.cointelligence.controller.users.UserRole"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
@@ -18,6 +19,9 @@
 			<li><a href="profile.jsp">Профил</a></li>
 			<li><a href="aboutUs.jsp">За нас</a></li>
 			<li><a href="tutorial.jsp">Tуториал</a></li>
+			<% if(user.getRole().equals(UserRole.MANAGER)){ %>
+			<li><a href="managerPanel.jsp">Мениджърски панел</a>
+			<%} %>
 		</ul>
 		<form id="logout"
 			action="<%=request.getContextPath() + Constants.LOGOUT_PAGE%>">

@@ -80,7 +80,7 @@ public class MarketMaker implements IMarketMaker {
 
 	//TODO
 	@Override
-	@Schedule(hour = "*", minute = "*/1")
+	@Schedule(hour = "*", minute = "*/1", persistent=false)
 	public void recomputePrices() {
 		System.out.println("RECALCULATING!");
 		//List<Transaction> logs = transactionsDao.getAllTransaction();
